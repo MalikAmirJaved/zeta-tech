@@ -1,113 +1,342 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
+import { ShieldCheck, Server, Building2, Cpu, Activity } from "lucide-react";
 
-const stackItems = [
+const stackLayers = [
   {
+    step: "01",
     title: "Connectivity Pipeline",
-    description: "Carrier-grade connectivity backbone for cross-border and domestic data transit.",
-    link: "#",
-    linkText: "View Details",
+    badge: { icon: "shield", text: "99.9% Uptime" },
+    description:
+      "Fiber-leased pipelines and sovereign border gateway connections with uncompromised traffic boundary control.",
+    metrics: [
+      { label: "Latency", value: "< 2ms" },
+      { label: "Redundancy", value: "N+2" },
+      { label: "Security", value: "AES-256" },
+    ],
   },
   {
+    step: "02",
     title: "Core Cloud Layer",
-    description: "Sovereign cloud infrastructure for enterprise and government workloads.",
-    link: "#",
-    linkText: "View Details",
+    badge: { icon: "server", text: "500+ Nodes" },
+    description:
+      "Virtualized, dedicated host nodes configured inside redundant data zones for extreme performance stability.",
+    chart: { label: "Performance stability", value: "98%" },
   },
   {
+    step: "03",
     title: "Data Center Strata",
-    description: "Tier III certified data center facilities with 99.99% uptime guarantee.",
-    link: "#",
-    linkText: "View Details",
+    badge: { icon: "building", text: "Tier 4 Facility" },
+    description:
+      "Pakistan-regionalized secure operational hosting compounds configured with continuous environmental matrices.",
+    progress: { label: "Sovereignty", value: "100%" },
   },
 ];
 
-const rightItems = [
+const branchCards = [
   {
-    title: "Built on the Sovereign Stack",
-    description: "Purpose-built technology platform engineered for Pakistan's digital sovereignty requirements.",
-  },
-  {
+    icon: "cpu",
+    stat: { label: "Automation", value: "4.2×" },
     title: "Intelligent Automation",
-    description: "AI-driven orchestration and management across all infrastructure layers.",
+    description:
+      "System-level task tooling engines built for enterprise workflow security and repeatable reliability.",
+    chart: { label: "Automation efficiency", value: "92%" },
   },
   {
+    icon: "activity",
+    stat: { label: "Telemetry", value: "Real-time" },
     title: "Network Intelligence",
-    description: "Real-time analytics and predictive intelligence for optimal performance.",
+    description:
+      "Sub-level security telemetric analysis predicting downtime vectors instantly across the sovereign stack.",
+    progress: { label: "Predictive accuracy", value: "96%" },
   },
 ];
+
+function BadgeIcon({ type }: { type: string }) {
+  switch (type) {
+    case "shield":
+      return <ShieldCheck className="w-3.5 h-3.5 text-primary" />;
+    case "server":
+      return <Server className="w-3.5 h-3.5 text-primary" />;
+    case "building":
+      return <Building2 className="w-3.5 h-3.5 text-primary" />;
+    case "cpu":
+      return <Cpu className="w-5.5 h-5.5 text-primary" />;
+    case "activity":
+      return <Activity className="w-5.5 h-5.5 text-primary" />;
+    default:
+      return null;
+  }
+}
+
+function MiniChart({ heights }: { heights: number[] }) {
+  return (
+    <div className="flex items-end gap-1.5 w-full h-[18px]">
+      {heights.map((h, i) => (
+        <div
+          key={i}
+          className={`flex-1 rounded-md ${
+            i === 3 || i === 5 ? "bg-primary" : "bg-[#FFE9E5]"
+          }`}
+          style={{ height: `${h}px` }}
+        />
+      ))}
+    </div>
+  );
+}
+
+function ProgressBar({ value }: { value: number }) {
+  return (
+    <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
+      <div
+        className="h-full bg-primary rounded-full"
+        style={{ width: `${value}%` }}
+      />
+    </div>
+  );
+}
 
 export function Stack() {
   return (
-    <section className="bg-background py-20 px-6 lg:px-[144px]">
-      <div className="max-w-[1440px] mx-auto">
-        {/* Tagline Pill */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-primary/20 bg-primary/[0.06] mb-5">
-          <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-          <span className="text-primary font-heading font-bold text-[11px] tracking-[3px] uppercase">
-            THE STACK
-          </span>
+    <section className="relative bg-white py-[120px] px-6 lg:px-[144px] overflow-hidden">
+      {/* Grid Background */}
+      <div className="absolute inset-x-[144px] top-[331px] bottom-[120px] pointer-events-none">
+        {/* Vertical lines */}
+        {[0, 140, 280, 420, 560, 700, 840, 980, 1120, 1260, 1440].map(
+          (left) => (
+            <div
+              key={`v-${left}`}
+              className="absolute top-0 w-px h-full bg-border opacity-35"
+              style={{ left: `${left}px` }}
+            />
+          )
+        )}
+        {/* Horizontal lines */}
+        {[0, 140, 280, 420].map((top) => (
+          <div
+            key={`h-${top}`}
+            className="absolute left-0 w-full h-px bg-border opacity-35"
+            style={{ top: `${top}px` }}
+          />
+        ))}
+        {/* Corner dots */}
+        {[
+          { left: -14, top: -14 },
+          { left: -14, top: 510 },
+          { left: 1478, top: -14 },
+          { left: 1478, top: 510 },
+          { left: 1478, top: 130 },
+          { left: 1478, top: 270 },
+          { left: 1478, top: 410 },
+        ].map((pos, i) => (
+          <div
+            key={`dot-${i}`}
+            className="absolute w-2.5 h-2.5 rounded-full bg-primary opacity-[0.18]"
+            style={{ left: `${pos.left}px`, top: `${pos.top}px` }}
+          />
+        ))}
+      </div>
+
+      <div className="relative z-10 max-w-[1440px] mx-auto">
+        {/* Centered Headings */}
+        <div className="flex flex-col items-center gap-4 mb-[50px]">
+          {/* Tagline Pill */}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-primary/20 bg-primary/[0.06]">
+            <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+            <span className="text-primary font-heading font-bold text-[11px] tracking-[3px] uppercase">
+              CORE ECOSYSTEM
+            </span>
+          </div>
+
+          {/* Title */}
+          <h2 className="font-heading font-bold text-[44px] leading-[57px] text-foreground text-center max-w-[711px]">
+            The Sovereign Intelligence Stack
+          </h2>
+
+          {/* Subtitle */}
+          <p className="font-sans text-lg leading-[23px] text-muted-foreground text-center max-w-[640px]">
+            Unifying core telecommunication layers and machine intelligence
+            into a single secure ecosystem.
+          </p>
         </div>
 
-        {/* Heading */}
-        <h2 className="font-heading font-bold text-[44px] leading-[57px] text-foreground mb-4">
-          The Sovereign Intelligence Stack
-        </h2>
-
-        {/* Subheading */}
-        <p className="font-sans text-base leading-[21px] text-muted-foreground mb-12 max-w-[600px]">
-          An end-to-end infrastructure stack designed, operated, and secured within national borders.
-        </p>
-
+        {/* Main Content Grid */}
         <div className="flex flex-col lg:flex-row gap-12">
-          {/* Left - Stack Items */}
-          <div className="flex-1 flex flex-col gap-6">
-            {stackItems.map((item, index) => (
-              <div
-                key={index}
-                className="bg-card border border-border rounded-2xl p-6 hover:shadow-lg transition-shadow"
-              >
-                <h3 className="font-heading font-bold text-xl text-foreground mb-2">
-                  {item.title}
-                </h3>
-                <p className="font-sans text-sm text-muted-foreground mb-4">
-                  {item.description}
-                </p>
-                <a
-                  href={item.link}
-                  className="inline-flex items-center gap-2 text-primary font-heading font-semibold text-sm hover:underline"
-                >
-                  {item.linkText}
-                  <ArrowRight className="w-4 h-4" />
-                </a>
+          {/* Left - Stack Column */}
+          <div className="flex-[1.7] flex flex-col gap-4">
+            {stackLayers.map((layer, index) => (
+              <div key={index}>
+                {/* Stack Layer Card */}
+                <div className="bg-white border border-border rounded-[18px] shadow-[0px_18px_40px_-18px_rgba(0,0,0,0.07),0px_2px_10px_-4px_rgba(0,0,0,0.04)] p-5">
+                  <div className="flex flex-col gap-3.5">
+                    {/* Top Row */}
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        {/* Step Marker */}
+                        <div className="w-11 h-11 rounded-full bg-primary flex items-center justify-center">
+                          <span className="text-white font-heading font-extrabold text-sm leading-[18px]">
+                            {layer.step}
+                          </span>
+                        </div>
+                        {/* Title */}
+                        <h3 className="font-heading font-bold text-[22px] leading-[29px] text-foreground">
+                          {layer.title}
+                        </h3>
+                      </div>
+                      {/* Badge */}
+                      <div className="flex items-center gap-2 px-2.5 py-2 rounded-full bg-[#FFE9E5]">
+                        <BadgeIcon type={layer.badge.icon} />
+                        <span className="text-primary font-heading font-extrabold text-[13px] leading-[17px]">
+                          {layer.badge.text}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Description */}
+                    <p className="font-sans text-sm leading-[22px] text-muted-foreground">
+                      {layer.description}
+                    </p>
+
+                    {/* Metrics */}
+                    {layer.metrics && (
+                      <div className="flex gap-3">
+                        {layer.metrics.map((metric, i) => (
+                          <div
+                            key={i}
+                            className="flex-1 flex flex-col gap-1 p-3 bg-background border border-border rounded-[14px]"
+                          >
+                            <span className="font-heading font-bold text-xs leading-[16px] text-muted-foreground">
+                              {metric.label}
+                            </span>
+                            <span className="font-heading font-extrabold text-base leading-[21px] text-foreground">
+                              {metric.value}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Mini Chart */}
+                    {layer.chart && (
+                      <div className="flex flex-col gap-2">
+                        <div className="flex items-center justify-between">
+                          <span className="font-heading font-bold text-xs leading-[16px] text-muted-foreground">
+                            {layer.chart.label}
+                          </span>
+                          <span className="font-heading font-extrabold text-sm leading-[18px] text-dark">
+                            {layer.chart.value}
+                          </span>
+                        </div>
+                        <MiniChart heights={[18, 22, 20, 26, 24, 28, 22]} />
+                      </div>
+                    )}
+
+                    {/* Progress Bar */}
+                    {layer.progress && (
+                      <div className="flex flex-col gap-1.5">
+                        <div className="flex items-center justify-between">
+                          <span className="font-heading font-bold text-xs leading-[16px] text-muted-foreground">
+                            {layer.progress.label}
+                          </span>
+                          <span className="font-heading font-extrabold text-sm leading-[18px] text-dark">
+                            {layer.progress.value}
+                          </span>
+                        </div>
+                        <ProgressBar value={100} />
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Connector */}
+                {index < stackLayers.length - 1 && (
+                  <div className="flex items-center gap-2.5 py-2">
+                    <div className="w-px h-7 bg-primary rounded" />
+                    <div className="flex-1 h-px bg-border rounded" />
+                  </div>
+                )}
               </div>
             ))}
           </div>
 
-          {/* Right - Built on Stack */}
-          <div className="flex-1">
-            <div className="bg-dark rounded-2xl p-8 h-full">
-              <h3 className="font-heading font-bold text-2xl text-white mb-8">
+          {/* Right - Branching Column */}
+          <div className="flex-1 flex flex-col gap-4">
+            {/* Branching Header */}
+            <div className="flex flex-col gap-1.5 pb-4 border-b border-border">
+              <span className="font-heading font-extrabold text-xs leading-[16px] tracking-[3px] text-muted-foreground uppercase">
+                BRANCHING INTO SPECIALIZED SOLUTIONS
+              </span>
+              <h3 className="font-heading font-bold text-2xl leading-[31px] text-foreground">
                 Built on the Sovereign Stack
               </h3>
-              
-              <div className="flex flex-col gap-8">
-                {rightItems.map((item, index) => (
-                  <div key={index} className="flex gap-4">
-                    <div className="w-1 h-full bg-primary rounded-full min-h-[60px]" />
-                    <div>
-                      <h4 className="font-heading font-semibold text-lg text-white mb-1">
-                        {item.title}
-                      </h4>
-                      <p className="font-sans text-sm text-dark-muted">
-                        {item.description}
-                      </p>
+            </div>
+
+            {/* Branch Cards */}
+            {branchCards.map((card, index) => (
+              <div
+                key={index}
+                className="bg-white border border-border rounded-[18px] shadow-[0px_2px_10px_-4px_rgba(0,0,0,0.04)] p-5"
+              >
+                <div className="flex flex-col gap-3.5">
+                  {/* Top Row */}
+                  <div className="flex items-center justify-between">
+                    {/* Icon */}
+                    <div className="w-11 h-11 rounded-[14px] bg-[#FFE9E5] flex items-center justify-center">
+                      <BadgeIcon type={card.icon} />
+                    </div>
+                    {/* Stat Box */}
+                    <div className="flex flex-col gap-0.5 px-2.5 py-2 bg-background border border-border rounded-xl">
+                      <span className="font-heading font-bold text-xs leading-[16px] text-muted-foreground">
+                        {card.stat.label}
+                      </span>
+                      <span className="font-heading font-extrabold text-base leading-[21px] text-dark">
+                        {card.stat.value}
+                      </span>
                     </div>
                   </div>
-                ))}
+
+                  {/* Text */}
+                  <div className="flex flex-col gap-1.5">
+                    <h4 className="font-heading font-bold text-xl leading-[26px] text-foreground">
+                      {card.title}
+                    </h4>
+                    <p className="font-sans text-sm leading-[22px] text-muted-foreground">
+                      {card.description}
+                    </p>
+                  </div>
+
+                  {/* Mini Chart */}
+                  {card.chart && (
+                    <div className="flex flex-col gap-2">
+                      <div className="flex items-center justify-between">
+                        <span className="font-heading font-bold text-xs leading-[16px] text-muted-foreground">
+                          {card.chart.label}
+                        </span>
+                        <span className="font-heading font-extrabold text-sm leading-[18px] text-dark">
+                          {card.chart.value}
+                        </span>
+                      </div>
+                      <MiniChart heights={[18, 22, 20, 26, 24, 28, 22]} />
+                    </div>
+                  )}
+
+                  {/* Progress Bar */}
+                  {card.progress && (
+                    <div className="flex flex-col gap-2">
+                      <div className="flex items-center justify-between">
+                        <span className="font-heading font-bold text-xs leading-[16px] text-muted-foreground">
+                          {card.progress.label}
+                        </span>
+                        <span className="font-heading font-extrabold text-sm leading-[18px] text-dark">
+                          {card.progress.value}
+                        </span>
+                      </div>
+                      <ProgressBar value={96} />
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
