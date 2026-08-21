@@ -57,7 +57,7 @@ export function About() {
         </div>
 
         {/* Right Content - Feature Grid */}
-        <div className="flex-1 border border-border rounded-2xl p-8">
+        <div className="flex-1 bg-secondary rounded-2xl p-8 border border-border">
           <p className="font-mono font-bold text-[10px] tracking-[2px] uppercase text-primary mb-6">
             Trusted by leading operators, enterprises and institutions
           </p>
@@ -68,7 +68,7 @@ export function About() {
               return (
                 <div
                   key={feature.title}
-                  className="bg-card rounded-xl p-6"
+                  className="bg-card rounded-xl p-6 border border-border/50"
                 >
                   <div className="w-10 h-10 rounded-full border border-primary/30 flex items-center justify-center mb-4">
                     <Icon className="w-5 h-5 text-primary" strokeWidth={1.5} />
