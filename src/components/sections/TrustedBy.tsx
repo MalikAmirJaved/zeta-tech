@@ -78,20 +78,24 @@ export function TrustedBy() {
           ))}
         </div>
 
+          <div className="flex-1 h-px bg-accent/40" />
+
         {/* Badges */}
-        <div className="grid md:grid-cols-3 gap-6">
-          {badges.map((badge) => {
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-8">
+          {badges.map((badge, index) => {
             const Icon = badge.icon;
             return (
               <div
                 key={badge.title}
-                className="flex items-start gap-4 p-5 rounded-xl border border-border bg-background"
+                className={`flex items-center gap-4 ${
+                  index < badges.length - 1 ? "md:border-r md:border-border md:pr-8" : ""
+                }`}
               >
                 <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
                   <Icon className="w-5 h-5 text-primary-foreground" />
                 </div>
                 <div>
-                  <h4 className="font-heading font-semibold text-sm text-foreground mb-1">
+                  <h4 className="font-heading font-bold text-sm text-foreground mb-0.5">
                     {badge.title}
                   </h4>
                   <p className="font-sans text-xs text-muted-foreground">
