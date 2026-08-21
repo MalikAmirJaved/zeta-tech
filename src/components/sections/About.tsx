@@ -30,7 +30,7 @@ export function About() {
     <section id="about" className="bg-off-white py-20 px-6 lg:px-[144px]">
       <div className="max-w-[1440px] mx-auto flex flex-col lg:flex-row gap-16">
         {/* Left Content */}
-        <div className="flex-[1.2]">
+        <div className="flex-[1.1]">
           {/* Tagline Pill */}
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-primary/20 bg-primary/[0.06] mb-5">
             <span className="w-1.5 h-1.5 rounded-full bg-primary" />
@@ -57,8 +57,8 @@ export function About() {
         </div>
 
         {/* Right Content - Feature Grid */}
-        <div className="flex-1 bg-secondary rounded-2xl p-8 border border-border">
-          <p className="font-mono font-bold text-[10px] tracking-[2px] uppercase text-primary mb-6">
+        <div className="flex-1 bg-card rounded-2xl p-8 border border-border">
+          <p className="font-mono font-bold text-[10px] tracking-[2px] text-primary mb-6">
             Trusted by leading operators, enterprises and institutions
           </p>
 
@@ -68,12 +68,12 @@ export function About() {
               return (
                 <div
                   key={feature.title}
-                  className="bg-card rounded-xl p-6 border border-border/50"
+                  className="bg-secondary rounded-xl p-6"
                 >
-                  <div className="w-10 h-10 rounded-full border border-primary/30 flex items-center justify-center mb-4">
-                    <Icon className="w-5 h-5 text-primary" strokeWidth={1.5} />
-                  </div>
-                  <h3 className="font-heading font-bold text-lg text-foreground mb-1">
+                  {/* <div className="w-10 h-10 rounded-full border border-primary/30 flex items-center justify-center mb-4"> */}
+                    <Icon className="w-6 h-6 text-primary mb-4.25" strokeWidth={1.5} />
+                  {/* </div> */}
+                  <h3 className="font-heading font-bold text-2xl text-foreground mb-1">
                     {feature.title}
                   </h3>
                   <p className="font-mono text-[10px] tracking-[1px] uppercase text-muted-foreground">
