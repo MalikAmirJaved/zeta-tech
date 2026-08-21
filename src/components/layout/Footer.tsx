@@ -26,9 +26,11 @@ export function Footer() {
           {/* Logo & Description */}
           <div className="md:col-span-1">
             <a href="/" className="flex items-center mb-6">
-              <div className="w-16 h-16 bg-zeta-red rounded-lg flex items-center justify-center">
-                <span className="text-zeta-white font-heading font-bold text-2xl">Z</span>
-              </div>
+              <img
+                src="/images/logo.png"
+                alt="Zeta Tech"
+                className="h-16 w-auto"
+              />
             </a>
             <p className="font-sans text-sm text-zeta-gray leading-[21px]">
               Powering Sovereign Digital Infrastructure across Pakistan.

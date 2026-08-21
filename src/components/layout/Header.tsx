@@ -19,9 +19,11 @@ export function Header() {
       <div className="max-w-[1728px] mx-auto px-6 lg:px-[144px] flex items-center justify-between h-[136px]">
         {/* Logo */}
         <a href="/" className="flex items-center">
-          <div className="w-[77px] h-[76px] bg-zeta-red rounded-lg flex items-center justify-center">
-            <span className="text-zeta-white font-heading font-bold text-4xl">Z</span>
-          </div>
+          <img
+            src="/images/logo.png"
+            alt="Zeta Tech"
+            className="h-[76px] w-auto"
+          />
         </a>
 
         {/* Desktop Navigation */}
