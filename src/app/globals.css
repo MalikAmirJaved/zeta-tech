@@ -75,6 +75,9 @@
   --chart-5: #999999;
   --radius: 0.625rem;
 
+  /* Light Theme Colors */
+  --zeta-off-white: #FFFFFD;
+
   /* Dark Theme Colors */
   --zeta-dark: #0C0C0E;
   --zeta-dark-overlay: #0C0C0EE5;
@@ -153,4 +156,7 @@
   .bg-dark-surface-2 { background-color: var(--zeta-dark-surface-2); }
   .border-dark { border-color: var(--zeta-dark-border); }
   .text-dark-muted { color: var(--muted-foreground-dark); }
+
+  /* Light Theme Utilities */
+  .bg-off-white { background-color: var(--zeta-off-white); }
 }
