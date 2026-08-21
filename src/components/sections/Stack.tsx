@@ -100,42 +100,6 @@ export function Stack() {
   return (
     <section className="relative bg-white py-[120px] px-6 lg:px-[144px] overflow-hidden">
       {/* Grid Background */}
-      <div className="absolute inset-x-[144px] top-[331px] bottom-[120px] pointer-events-none">
-        {/* Vertical lines */}
-        {[0, 140, 280, 420, 560, 700, 840, 980, 1120, 1260, 1440].map(
-          (left) => (
-            <div
-              key={`v-${left}`}
-              className="absolute top-0 w-px h-full bg-border opacity-35"
-              style={{ left: `${left}px` }}
-            />
-          )
-        )}
-        {/* Horizontal lines */}
-        {[0, 140, 280, 420].map((top) => (
-          <div
-            key={`h-${top}`}
-            className="absolute left-0 w-full h-px bg-border opacity-35"
-            style={{ top: `${top}px` }}
-          />
-        ))}
-        {/* Corner dots */}
-        {[
-          { left: -14, top: -14 },
-          { left: -14, top: 510 },
-          { left: 1478, top: -14 },
-          { left: 1478, top: 510 },
-          { left: 1478, top: 130 },
-          { left: 1478, top: 270 },
-          { left: 1478, top: 410 },
-        ].map((pos, i) => (
-          <div
-            key={`dot-${i}`}
-            className="absolute w-2.5 h-2.5 rounded-full bg-primary opacity-[0.18]"
-            style={{ left: `${pos.left}px`, top: `${pos.top}px` }}
-          />
-        ))}
-      </div>
 
       <div className="relative z-10 max-w-[1440px] mx-auto">
         {/* Centered Headings */}
