@@ -28,7 +28,7 @@ const icons = [
 
 export function Automation() {
   return (
-    <section className="bg-zeta-dark py-20 px-6 lg:px-[144px]">
+    <section className="bg-dark py-20 px-6 lg:px-[144px]">
       <div className="max-w-[1440px] mx-auto text-center">
         {/* Icon Grid */}
         <div className="flex flex-wrap items-center justify-center gap-6 mb-12">
@@ -37,36 +37,36 @@ export function Automation() {
             return (
               <div
                 key={index}
-                className="w-16 h-16 rounded-2xl border border-zeta-border bg-zeta-darker flex items-center justify-center hover:border-zeta-red/50 transition-colors"
+                className="w-16 h-16 rounded-2xl border border-dark bg-dark-darker flex items-center justify-center hover:border-primary/50 transition-colors"
               >
-                <Icon className="w-7 h-7 text-zeta-gray" />
+                <Icon className="w-7 h-7 text-dark-muted" />
               </div>
             );
           })}
         </div>
 
         {/* Tagline Pill */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-zeta-red/20 bg-zeta-red/[0.0588235] mb-5">
-          <span className="w-1.5 h-1.5 rounded-full bg-zeta-red" />
-          <span className="text-zeta-red font-heading font-bold text-[11px] tracking-[3px] uppercase">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-primary/20 bg-primary/[0.06] mb-5">
+          <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+          <span className="text-primary font-heading font-bold text-[11px] tracking-[3px] uppercase">
             CORE CAPABILITIES
           </span>
         </div>
 
         {/* Heading */}
-        <h2 className="font-heading font-bold text-[44px] leading-[57px] text-center text-zeta-white mb-5">
+        <h2 className="font-heading font-bold text-[44px] leading-[57px] text-center text-white mb-5">
           Intelligent Automation
         </h2>
 
         {/* Subheading */}
-        <p className="font-sans text-base leading-[21px] text-center text-zeta-gray max-w-[600px] mx-auto mb-8">
+        <p className="font-sans text-base leading-[21px] text-center text-dark-muted max-w-[600px] mx-auto mb-8">
           Optimizing telecommunications, cloud & infrastructure operations across services, partners, and sovereign frameworks.
         </p>
 
         {/* CTA Button */}
         <a
           href="#services"
-          className="inline-flex items-center gap-2 bg-zeta-red text-zeta-white font-heading font-semibold text-[15px] leading-5 px-7 py-4 rounded-[10px] hover:bg-red-700 transition-colors"
+          className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-heading font-semibold text-[15px] leading-5 px-7 py-4 rounded-[10px] hover:opacity-90 transition-opacity"
         >
           Explore Our Services
         </a>

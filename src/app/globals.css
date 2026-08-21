@@ -46,104 +46,71 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
-  
-  /* Zeta Brand Colors */
-  --color-zeta-red: var(--zeta-red);
-  --color-zeta-dark: var(--zeta-dark);
-  --color-zeta-darker: var(--zeta-darker);
-  --color-zeta-border: var(--zeta-border);
-  --color-zeta-gray: var(--zeta-gray);
-  --color-zeta-text: var(--zeta-text);
-  --color-zeta-text-light: var(--zeta-text-light);
-  --color-zeta-green: var(--zeta-green);
-  --color-zeta-green-dark: var(--zeta-green-dark);
-  --color-zeta-green-light: var(--zeta-green-light);
-  --color-zeta-page-bg: var(--zeta-page-bg);
-  --color-zeta-white: var(--zeta-white);
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
+  /* Semantic Colors - Light Theme */
+  --background: #F9FAFB;
+  --foreground: #333333;
+  --card: #FFFFFF;
+  --card-foreground: #333333;
+  --popover: #FFFFFF;
+  --popover-foreground: #333333;
+  --primary: #ED001B;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F7F7F5;
+  --secondary-foreground: #333333;
+  --muted: #F3F4F6;
+  --muted-foreground: #666666;
+  --accent: #00C94F;
+  --accent-foreground: #FFFFFF;
+  --destructive: #ED001B;
+  --border: #E5E7EB;
+  --input: #E5E7EB;
+  --ring: #ED001B;
+  --chart-1: #ED001B;
+  --chart-2: #00C94F;
+  --chart-3: #0087FF;
+  --chart-4: #136027;
+  --chart-5: #999999;
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-  
-  /* Zeta Brand Colors */
-  --zeta-red: #ED001B;
-  --zeta-red-rgb: 237, 0, 27;
+
+  /* Dark Theme Colors */
   --zeta-dark: #0C0C0E;
   --zeta-darker: #141416;
-  --zeta-border: #1E1E20;
-  --zeta-page-bg: #F9FAFB;
-  --zeta-white: #FFFFFF;
-  --zeta-text: #333333;
-  --zeta-text-light: #555555;
-  --zeta-gray: #999999;
-  --zeta-green: #00C94F;
-  --zeta-green-dark: #136027;
-  --zeta-green-light: #9ECEB7;
+  --zeta-dark-border: #1E1E20;
+  --zeta-dark-surface: #0F1828;
+  --zeta-dark-surface-2: #1C2938;
+
+  /* Semantic Dark Colors */
+  --background-dark: #0C0C0E;
+  --foreground-dark: #FFFFFF;
+  --card-dark: #141416;
+  --card-foreground-dark: #FFFFFF;
+  --muted-dark: #1E1E20;
+  --muted-foreground-dark: #999999;
+  --border-dark: #1E1E20;
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --background: var(--background-dark);
+  --foreground: var(--foreground-dark);
+  --card: var(--card-dark);
+  --card-foreground: var(--card-foreground-dark);
+  --popover: var(--card-dark);
+  --popover-foreground: var(--card-foreground-dark);
+  --primary: #ED001B;
+  --primary-foreground: #FFFFFF;
+  --secondary: #141416;
+  --secondary-foreground: #FFFFFF;
+  --muted: var(--muted-dark);
+  --muted-foreground: var(--muted-foreground-dark);
+  --accent: #00C94F;
+  --accent-foreground: #FFFFFF;
+  --destructive: #ED001B;
+  --border: var(--border-dark);
+  --input: var(--border-dark);
+  --ring: #ED001B;
 }
 
 @layer base {
@@ -159,18 +126,29 @@
 }
 
 @layer utilities {
-  .text-zeta-red { color: var(--zeta-red); }
-  .bg-zeta-red { background-color: var(--zeta-red); }
-  .text-zeta-dark { color: var(--zeta-dark); }
-  .bg-zeta-dark { background-color: var(--zeta-dark); }
-  .text-zeta-darker { color: var(--zeta-darker); }
-  .bg-zeta-darker { background-color: var(--zeta-darker); }
-  .text-zeta-gray { color: var(--zeta-gray); }
-  .text-zeta-text { color: var(--zeta-text); }
-  .text-zeta-text-light { color: var(--zeta-text-light); }
-  .text-zeta-green { color: var(--zeta-green); }
-  .bg-zeta-green { background-color: var(--zeta-green); }
-  .text-zeta-green-dark { color: var(--zeta-green-dark); }
-  .bg-zeta-page-bg { background-color: var(--zeta-page-bg); }
-  .border-zeta-border { border-color: var(--zeta-border); }
+  /* Primary - Brand Red */
+  .text-primary { color: var(--primary); }
+  .bg-primary { background-color: var(--primary); }
+  .border-primary { border-color: var(--primary); }
+
+  /* Secondary - Light backgrounds */
+  .text-secondary { color: var(--secondary-foreground); }
+  .bg-secondary { background-color: var(--secondary); }
+  .border-secondary { border-color: var(--secondary); }
+
+  /* Muted - Gray text/backgrounds */
+  .text-muted { color: var(--muted-foreground); }
+  .bg-muted { background-color: var(--muted); }
+
+  /* Accent - Green */
+  .text-accent { color: var(--accent); }
+  .bg-accent { background-color: var(--accent); }
+
+  /* Dark Theme Utilities */
+  .bg-dark { background-color: var(--zeta-dark); }
+  .bg-dark-darker { background-color: var(--zeta-darker); }
+  .bg-dark-surface { background-color: var(--zeta-dark-surface); }
+  .bg-dark-surface-2 { background-color: var(--zeta-dark-surface-2); }
+  .border-dark { border-color: var(--zeta-dark-border); }
+  .text-dark-muted { color: var(--muted-foreground-dark); }
 }

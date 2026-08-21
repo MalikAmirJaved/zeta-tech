@@ -22,24 +22,24 @@ const platforms = [
 
 export function Platforms() {
   return (
-    <section id="products" className="bg-zeta-white py-20 px-6 lg:px-[144px]">
+    <section id="products" className="bg-card py-20 px-6 lg:px-[144px]">
       <div className="max-w-[1440px] mx-auto text-center">
         {/* Tagline Pill */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-zeta-red/20 bg-zeta-red/[0.0588235] mb-5">
-          <span className="w-1.5 h-1.5 rounded-full bg-zeta-red" />
-          <span className="text-zeta-red font-heading font-bold text-[11px] tracking-[3px] uppercase">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-primary/20 bg-primary/[0.06] mb-5">
+          <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+          <span className="text-primary font-heading font-bold text-[11px] tracking-[3px] uppercase">
             ZETA PLATFORMS
           </span>
         </div>
 
         {/* Heading */}
-        <h2 className="font-heading font-bold text-[44px] leading-[57px] text-zeta-text mb-5">
+        <h2 className="font-heading font-bold text-[44px] leading-[57px] text-foreground mb-5">
           Purpose-built platforms powered<br />
           by Zeta&apos;s infrastructure.
         </h2>
 
         {/* Subheading */}
-        <p className="font-sans text-base leading-[21px] text-zeta-text-light mb-12 max-w-[700px] mx-auto">
+        <p className="font-sans text-base leading-[21px] text-muted-foreground mb-12 max-w-[700px] mx-auto">
           Zeta Technologies delivers high-performance telecommunications backbone systems,
           sovereign cloud platforms, and intelligent automation for enterprise, government, and telecom operators across Pakistan.
         </p>
@@ -49,25 +49,25 @@ export function Platforms() {
           {platforms.map((platform) => (
             <div
               key={platform.title}
-              className="bg-zeta-page-bg border border-zeta-border rounded-2xl p-8 text-left hover:shadow-lg transition-shadow"
+              className="bg-background border border-border rounded-2xl p-8 text-left hover:shadow-lg transition-shadow"
             >
-              <h3 className="font-heading font-bold text-2xl text-zeta-text mb-3">
+              <h3 className="font-heading font-bold text-2xl text-foreground mb-3">
                 {platform.title}
               </h3>
-              <p className="font-sans text-sm text-zeta-text-light mb-6">
+              <p className="font-sans text-sm text-muted-foreground mb-6">
                 {platform.description}
               </p>
               <ul className="flex flex-col gap-2 mb-6">
                 {platform.features.map((feature) => (
-                  <li key={feature} className="flex items-center gap-2 text-sm text-zeta-gray">
-                    <span className="w-1.5 h-1.5 rounded-full bg-zeta-red" />
+                  <li key={feature} className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary" />
                     {feature}
                   </li>
                 ))}
               </ul>
               <a
                 href="#"
-                className="inline-flex items-center gap-2 text-zeta-red font-heading font-semibold text-sm hover:underline"
+                className="inline-flex items-center gap-2 text-primary font-heading font-semibold text-sm hover:underline"
               >
                 Explore
                 <ArrowRight className="w-4 h-4" />
@@ -79,7 +79,7 @@ export function Platforms() {
         {/* CTA Button */}
         <a
           href="#products"
-          className="inline-flex items-center gap-2 bg-zeta-red text-zeta-white font-heading font-semibold text-[15px] leading-5 px-7 py-4 rounded-[10px] hover:bg-red-700 transition-colors"
+          className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-heading font-semibold text-[15px] leading-5 px-7 py-4 rounded-[10px] hover:opacity-90 transition-opacity"
         >
           View All Products
           <ArrowRight className="w-4 h-4" />

@@ -29,18 +29,18 @@ const stats = [
 
 export function Proof() {
   return (
-    <section className="bg-zeta-page-bg py-20 px-6 lg:px-[144px]">
+    <section className="bg-background py-20 px-6 lg:px-[144px]">
       <div className="max-w-[1440px] mx-auto">
         {/* Tagline Pill */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-zeta-red/20 bg-zeta-red/[0.0588235] mb-5">
-          <span className="w-1.5 h-1.5 rounded-full bg-zeta-red" />
-          <span className="text-zeta-red font-heading font-bold text-[11px] tracking-[3px] uppercase">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-primary/20 bg-primary/[0.06] mb-5">
+          <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+          <span className="text-primary font-heading font-bold text-[11px] tracking-[3px] uppercase">
             WHY ZETA
           </span>
         </div>
 
         {/* Heading */}
-        <h2 className="font-heading font-bold text-[44px] leading-[57px] text-zeta-text mb-12">
+        <h2 className="font-heading font-bold text-[44px] leading-[57px] text-foreground mb-12">
           The Proof Behind The Platform
         </h2>
 
@@ -49,12 +49,12 @@ export function Proof() {
           {stats.map((stat) => (
             <div
               key={stat.title}
-              className="flex flex-col p-6 rounded-2xl bg-zeta-white border border-zeta-border"
+              className="flex flex-col p-6 rounded-2xl bg-card border border-border"
             >
-              <h3 className="font-mono font-bold text-[10px] tracking-[2px] text-zeta-red uppercase mb-3">
+              <h3 className="font-mono font-bold text-[10px] tracking-[2px] text-primary uppercase mb-3">
                 {stat.title}
               </h3>
-              <p className="font-sans text-sm text-zeta-text-light">
+              <p className="font-sans text-sm text-muted-foreground">
                 {stat.description}
               </p>
             </div>

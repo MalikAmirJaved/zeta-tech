@@ -40,23 +40,23 @@ const rightItems = [
 
 export function Stack() {
   return (
-    <section className="bg-zeta-page-bg py-20 px-6 lg:px-[144px]">
+    <section className="bg-background py-20 px-6 lg:px-[144px]">
       <div className="max-w-[1440px] mx-auto">
         {/* Tagline Pill */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-zeta-red/20 bg-zeta-red/[0.0588235] mb-5">
-          <span className="w-1.5 h-1.5 rounded-full bg-zeta-red" />
-          <span className="text-zeta-red font-heading font-bold text-[11px] tracking-[3px] uppercase">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-primary/20 bg-primary/[0.06] mb-5">
+          <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+          <span className="text-primary font-heading font-bold text-[11px] tracking-[3px] uppercase">
             THE STACK
           </span>
         </div>
 
         {/* Heading */}
-        <h2 className="font-heading font-bold text-[44px] leading-[57px] text-zeta-text mb-4">
+        <h2 className="font-heading font-bold text-[44px] leading-[57px] text-foreground mb-4">
           The Sovereign Intelligence Stack
         </h2>
 
         {/* Subheading */}
-        <p className="font-sans text-base leading-[21px] text-zeta-text-light mb-12 max-w-[600px]">
+        <p className="font-sans text-base leading-[21px] text-muted-foreground mb-12 max-w-[600px]">
           An end-to-end infrastructure stack designed, operated, and secured within national borders.
         </p>
 
@@ -66,17 +66,17 @@ export function Stack() {
             {stackItems.map((item, index) => (
               <div
                 key={index}
-                className="bg-zeta-white border border-zeta-border rounded-2xl p-6 hover:shadow-lg transition-shadow"
+                className="bg-card border border-border rounded-2xl p-6 hover:shadow-lg transition-shadow"
               >
-                <h3 className="font-heading font-bold text-xl text-zeta-text mb-2">
+                <h3 className="font-heading font-bold text-xl text-foreground mb-2">
                   {item.title}
                 </h3>
-                <p className="font-sans text-sm text-zeta-text-light mb-4">
+                <p className="font-sans text-sm text-muted-foreground mb-4">
                   {item.description}
                 </p>
                 <a
                   href={item.link}
-                  className="inline-flex items-center gap-2 text-zeta-red font-heading font-semibold text-sm hover:underline"
+                  className="inline-flex items-center gap-2 text-primary font-heading font-semibold text-sm hover:underline"
                 >
                   {item.linkText}
                   <ArrowRight className="w-4 h-4" />
@@ -87,20 +87,20 @@ export function Stack() {
 
           {/* Right - Built on Stack */}
           <div className="flex-1">
-            <div className="bg-zeta-dark rounded-2xl p-8 h-full">
-              <h3 className="font-heading font-bold text-2xl text-zeta-white mb-8">
+            <div className="bg-dark rounded-2xl p-8 h-full">
+              <h3 className="font-heading font-bold text-2xl text-white mb-8">
                 Built on the Sovereign Stack
               </h3>
               
               <div className="flex flex-col gap-8">
                 {rightItems.map((item, index) => (
                   <div key={index} className="flex gap-4">
-                    <div className="w-1 h-full bg-zeta-red rounded-full min-h-[60px]" />
+                    <div className="w-1 h-full bg-primary rounded-full min-h-[60px]" />
                     <div>
-                      <h4 className="font-heading font-semibold text-lg text-zeta-white mb-1">
+                      <h4 className="font-heading font-semibold text-lg text-white mb-1">
                         {item.title}
                       </h4>
-                      <p className="font-sans text-sm text-zeta-gray">
+                      <p className="font-sans text-sm text-dark-muted">
                         {item.description}
                       </p>
                     </div>

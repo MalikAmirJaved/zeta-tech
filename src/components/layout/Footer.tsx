@@ -20,7 +20,7 @@ const footerLinks = {
 
 export function Footer() {
   return (
-    <footer className="bg-zeta-dark border-t border-zeta-border">
+    <footer className="bg-dark border-t border-dark">
       <div className="max-w-[1728px] mx-auto px-6 lg:px-[144px] py-16">
         <div className="grid md:grid-cols-4 gap-12 mb-12">
           {/* Logo & Description */}
@@ -32,14 +32,14 @@ export function Footer() {
                 className="h-16 w-auto"
               />
             </a>
-            <p className="font-sans text-sm text-zeta-gray leading-[21px]">
+            <p className="font-sans text-sm text-dark-muted leading-[21px]">
               Powering Sovereign Digital Infrastructure across Pakistan.
             </p>
           </div>
 
           {/* Products */}
           <div>
-            <h4 className="font-heading font-semibold text-sm text-zeta-white mb-4 uppercase tracking-wider">
+            <h4 className="font-heading font-semibold text-sm text-white mb-4 uppercase tracking-wider">
               Products
             </h4>
             <ul className="flex flex-col gap-3">
@@ -47,7 +47,7 @@ export function Footer() {
                 <li key={link.label}>
                   <a
                     href={link.href}
-                    className="font-sans text-sm text-zeta-gray hover:text-zeta-white transition-colors"
+                    className="font-sans text-sm text-dark-muted hover:text-white transition-colors"
                   >
                     {link.label}
                   </a>
@@ -58,7 +58,7 @@ export function Footer() {
 
           {/* Company */}
           <div>
-            <h4 className="font-heading font-semibold text-sm text-zeta-white mb-4 uppercase tracking-wider">
+            <h4 className="font-heading font-semibold text-sm text-white mb-4 uppercase tracking-wider">
               Company
             </h4>
             <ul className="flex flex-col gap-3">
@@ -66,7 +66,7 @@ export function Footer() {
                 <li key={link.label}>
                   <a
                     href={link.href}
-                    className="font-sans text-sm text-zeta-gray hover:text-zeta-white transition-colors"
+                    className="font-sans text-sm text-dark-muted hover:text-white transition-colors"
                   >
                     {link.label}
                   </a>
@@ -77,7 +77,7 @@ export function Footer() {
 
           {/* Resources */}
           <div>
-            <h4 className="font-heading font-semibold text-sm text-zeta-white mb-4 uppercase tracking-wider">
+            <h4 className="font-heading font-semibold text-sm text-white mb-4 uppercase tracking-wider">
               Resources
             </h4>
             <ul className="flex flex-col gap-3">
@@ -85,7 +85,7 @@ export function Footer() {
                 <li key={link.label}>
                   <a
                     href={link.href}
-                    className="font-sans text-sm text-zeta-gray hover:text-zeta-white transition-colors"
+                    className="font-sans text-sm text-dark-muted hover:text-white transition-colors"
                   >
                     {link.label}
                   </a>
@@ -96,15 +96,15 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-zeta-border pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="font-sans text-xs text-zeta-gray">
+        <div className="border-t border-dark pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="font-sans text-xs text-dark-muted">
             © {new Date().getFullYear()} Zeta Technologies. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
-            <a href="#" className="font-sans text-xs text-zeta-gray hover:text-zeta-white transition-colors">
+            <a href="#" className="font-sans text-xs text-dark-muted hover:text-white transition-colors">
               Privacy Policy
             </a>
-            <a href="#" className="font-sans text-xs text-zeta-gray hover:text-zeta-white transition-colors">
+            <a href="#" className="font-sans text-xs text-dark-muted hover:text-white transition-colors">
               Terms of Service
             </a>
           </div>

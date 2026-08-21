@@ -41,19 +41,45 @@ src/
 ## STRICT RULES
 
 ### 1. COLOR MANAGEMENT (CRITICAL)
-- **NEVER use hardcoded colors** in component files
-- **ALWAYS use CSS custom properties** from `globals.css`
-- Reference colors via Tailwind classes: `text-primary`, `bg-background`, `text-muted-foreground`, etc.
-- Available color tokens:
-  - `--zeta-red`: #ED001B (Primary brand color)
-  - `--zeta-dark`: #0C0C0E (Dark backgrounds)
-  - `--zeta-darker`: #141416 (Card backgrounds)
-  - `--zeta-border`: #1E1E20 (Borders)
-  - `--zeta-gray`: #999999 (Muted text)
-  - `--zeta-text`: #333333 (Dark text)
-  - `--zeta-green`: #00C94F (Success/active states)
-  - `--zeta-page-bg`: #F9FAFB (Page background)
-  - `--zeta-white`: #FFFFFF
+
+**RULE: NEVER use hardcoded colors in component files.**
+
+All colors MUST come from `globals.css` using semantic tokens. This ensures that if the color theory changes, you only update `globals.css` and the entire app updates automatically.
+
+#### Semantic Color Tokens (USE THESE):
+| Token | Purpose | Tailwind Class |
+|-------|---------|----------------|
+| `--primary` | Brand color (red) | `text-primary`, `bg-primary` |
+| `--secondary` | Card backgrounds | `text-secondary`, `bg-secondary` |
+| `--background` | Page background | `bg-background` |
+| `--foreground` | Main text | `text-foreground` |
+| `--muted` | Subtle backgrounds | `bg-muted` |
+| `--muted-foreground` | Gray text | `text-muted` |
+| `--accent` | Success/green | `text-accent`, `bg-accent` |
+| `--destructive` | Error/danger | `text-destructive` |
+| `--border` | Borders | `border-border` |
+
+#### Dark Theme Utilities (for dark sections):
+| Utility | Purpose |
+|---------|---------|
+| `bg-dark` | Dark background (#0C0C0E) |
+| `bg-dark-darker` | Darker background (#141416) |
+| `bg-dark-surface` | Dark surface (#0F1828) |
+| `bg-dark-surface-2` | Dark surface 2 (#1C2938) |
+| `border-dark` | Dark borders (#1E1E20) |
+| `text-dark-muted` | Muted text on dark (#999999) |
+
+#### Color Change Workflow:
+1. To change brand color: Edit `--primary` in `:root`
+2. To change dark theme: Edit `--zeta-dark`, `--zeta-darker`, `--zeta-dark-border`
+3. To change text colors: Edit `--foreground`, `--muted-foreground`
+4. To change success color: Edit `--accent`
+
+#### FORBIDDEN:
+- ❌ `text-[#ED001B]` - Use `text-primary`
+- ❌ `bg-[#0C0C0E]` - Use `bg-dark`
+- ❌ `text-[#999999]` - Use `text-muted`
+- ❌ `border-[#1E1E20]` - Use `border-dark`
 
 ### 2. COMPONENT RULES
 - All components must be client components (`"use client"`) when using interactivity
@@ -89,29 +115,28 @@ src/
 
 ## Design Tokens Reference
 
+### Light Theme (Default)
 ```css
 :root {
-  /* Brand Colors */
-  --zeta-red: #ED001B;
-  --zeta-red-rgb: 237, 0, 27;
-  
-  /* Dark Theme */
+  --background: #F9FAFB;
+  --foreground: #333333;
+  --card: #FFFFFF;
+  --primary: #ED001B;
+  --secondary: #F7F7F5;
+  --muted: #F3F4F6;
+  --muted-foreground: #666666;
+  --accent: #00C94F;
+  --border: #E5E7EB;
+}
+```
+
+### Dark Theme (Hero, Footer, etc.)
+```css
+:root {
   --zeta-dark: #0C0C0E;
   --zeta-darker: #141416;
-  --zeta-border: #1E1E20;
-  
-  /* Light Theme */
-  --zeta-page-bg: #F9FAFB;
-  --zeta-white: #FFFFFF;
-  
-  /* Text Colors */
-  --zeta-text: #333333;
-  --zeta-text-light: #555555;
-  --zeta-gray: #999999;
-  
-  /* Status Colors */
-  --zeta-green: #00C94F;
-  --zeta-green-dark: #136027;
-  --zeta-green-light: #9ECEB7;
+  --zeta-dark-border: #1E1E20;
+  --zeta-dark-surface: #0F1828;
+  --zeta-dark-surface-2: #1C2938;
 }
 ```

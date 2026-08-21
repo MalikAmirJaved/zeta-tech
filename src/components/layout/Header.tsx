@@ -15,7 +15,7 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="bg-zeta-dark border-b border-zeta-border sticky top-0 z-50">
+    <header className="bg-dark border-b border-dark sticky top-0 z-50">
       <div className="max-w-[1728px] mx-auto px-6 lg:px-[144px] flex items-center justify-between h-[136px]">
         {/* Logo */}
         <a href="/" className="flex items-center">
@@ -32,7 +32,7 @@ export function Header() {
             <a
               key={item.label}
               href={item.href}
-              className="flex items-center gap-1.5 text-zeta-white font-heading font-semibold text-base hover:text-zeta-red transition-colors"
+              className="flex items-center gap-1.5 text-white font-heading font-semibold text-base hover:text-primary transition-colors"
             >
               {item.label}
               {item.hasDropdown && (
@@ -46,7 +46,7 @@ export function Header() {
         <div className="hidden lg:block">
           <a
             href="#contact"
-            className="bg-zeta-red text-zeta-white font-heading font-semibold text-sm px-5 py-2.5 rounded-[10px] hover:bg-red-700 transition-colors inline-block"
+            className="bg-primary text-primary-foreground font-heading font-semibold text-sm px-5 py-2.5 rounded-[10px] hover:opacity-90 transition-opacity inline-block"
           >
             Talk to Zeta
           </a>
@@ -54,7 +54,7 @@ export function Header() {
 
         {/* Mobile Menu Toggle */}
         <button
-          className="lg:hidden text-zeta-white"
+          className="lg:hidden text-white"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Toggle menu"
         >
@@ -64,13 +64,13 @@ export function Header() {
 
       {/* Mobile Navigation */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-zeta-dark border-t border-zeta-border px-6 py-4">
+        <div className="lg:hidden bg-dark border-t border-dark px-6 py-4">
           <nav className="flex flex-col gap-4">
             {navItems.map((item) => (
               <a
                 key={item.label}
                 href={item.href}
-                className="text-zeta-white font-heading font-semibold text-base hover:text-zeta-red transition-colors"
+                className="text-white font-heading font-semibold text-base hover:text-primary transition-colors"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {item.label}
@@ -78,7 +78,7 @@ export function Header() {
             ))}
             <a
               href="#contact"
-              className="bg-zeta-red text-zeta-white font-heading font-semibold text-sm px-5 py-2.5 rounded-[10px] text-center hover:bg-red-700 transition-colors"
+              className="bg-primary text-primary-foreground font-heading font-semibold text-sm px-5 py-2.5 rounded-[10px] text-center hover:opacity-90 transition-opacity"
             >
               Get Started
             </a>
