@@ -87,6 +87,11 @@ export function Footer() {
           </div>
         </div>
       </div>
+
+      {/* Large ZETA text at bottom */}
+      <div className="relative w-full flex justify-center pt-10 pb-0 overflow-hidden">
+
+      </div>
     </footer>
   );
 }
