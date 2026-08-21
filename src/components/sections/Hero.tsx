@@ -52,20 +52,28 @@ export function Hero() {
 
             {/* Buttons */}
             <div className="flex items-center gap-4">
-              <a
-                href="#contact"
-                className="bg-primary text-primary-foreground font-heading font-semibold text-[15px] leading-5 px-7 py-4 rounded-[10px] hover:opacity-90 transition-opacity"
-              >
-                Talk to Zeta
-              </a>
-              <a
-                href="#about"
-                className="border border-white/70 text-white font-heading font-semibold text-[15px] leading-5 px-7 py-4 rounded-[10px] hover:bg-white/10 transition-colors flex items-center gap-2"
-              >
-                About Zeta
-                <ArrowRight className="w-3.5 h-3.5" strokeWidth={2} />
-              </a>
-            </div>
+  <a
+    href="#contact"
+    className="group bg-primary text-primary-foreground font-heading font-semibold text-[15px] leading-5 px-7 py-4 rounded-[10px] hover:opacity-90 transition-opacity flex items-center gap-2"
+  >
+    Talk to Zeta
+    <ArrowRight
+      className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1"
+      strokeWidth={2}
+    />
+  </a>
+
+  <a
+    href="#about"
+    className="group border border-white/70 text-white font-heading font-semibold text-[15px] leading-5 px-7 py-4 rounded-[10px] hover:bg-white/10 transition-colors flex items-center gap-2"
+  >
+    About Zeta
+    <ArrowRight
+      className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1"
+      strokeWidth={2}
+    />
+  </a>
+</div>
           </div>
 
           {/* Hero Right - NOC Dashboard */}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { ArrowRight, ChevronDown, Menu, X } from "lucide-react";
 
 const navItems = [
   { label: "About", href: "#about" },
@@ -43,14 +43,18 @@ export function Header() {
         </nav>
 
         {/* CTA Button */}
-        <div className="hidden lg:block">
-          <a
-            href="#contact"
-            className="bg-primary text-primary-foreground font-heading font-semibold text-sm px-5 py-2.5 rounded-[10px] hover:opacity-90 transition-opacity inline-block"
-          >
-            Talk to Zeta
-          </a>
-        </div>
+       <div className="hidden lg:block">
+  <a
+    href="#contact"
+    className="bg-primary text-primary-foreground font-heading font-semibold text-sm px-5 py-2.5 rounded-[10px] hover:opacity-90 transition-opacity inline-flex items-center gap-2"
+  >
+    Talk to Zeta
+    <ArrowRight
+      size={16}
+      className="transition-transform duration-200 group-hover:translate-x-1"
+    />
+  </a>
+</div>
 
         {/* Mobile Menu Toggle */}
         <button
