@@ -55,19 +55,20 @@ export function Insights() {
           {articles.map((article) => (
             <div
               key={article.title}
-              className="bg-white rounded-2xl overflow-hidden flex flex-col h-[601px]"
+              className="bg-white rounded-2xl overflow-hidden flex flex-col"
             >
-              {/* Image */}
-              <div className="relative w-full h-[334px]">
+              {/* Image - Fixed height */}
+              <div className="relative w-full h-[334px] shrink-0">
                 <Image
                   src={article.image}
                   alt={article.title}
                   fill
+                  sizes="(max-width: 768px) 100vw, 453px"
                   className="object-cover"
                 />
               </div>
 
-              {/* Content */}
+              {/* Content - Fixed padding */}
               <div className="flex flex-col gap-3 p-5 pt-6 flex-1">
                 {/* Category */}
                 <span className="font-heading font-bold text-[11px] leading-[14px] tracking-[1px] text-primary uppercase">
