@@ -37,7 +37,6 @@ export function Platforms() {
       className="relative bg-secondary py-[120px] px-6 lg:px-[144px] overflow-hidden"
     >
       {/* Background Logo */}
-      {/* Background Logo */}
       <div className="absolute right-[-150px] top-28 w-[650px] h-[645px] pointer-events-none z-0">
         <Image
           src="/biglogo.png"
