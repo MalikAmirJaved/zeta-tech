@@ -19,11 +19,10 @@ const socialLinks = [
 
 export function Footer() {
   return (
-    <footer className="relative bg-white overflow-hidden">
-      {/* Main Content */}
-      <div className="relative z-10 max-w-[1440px] mx-auto ">
+    <footer className="bg-white overflow-hidden">
+      <div className="max-w-[1440px] mx-auto">
         {/* Top Row: 3 columns */}
-        <div className="flex items-start justify-between pt-20 pb-10">
+        <div className="grid grid-cols-[1fr_auto_1fr] items-start pt-20">
           {/* Left - Follow Us */}
           <div className="flex flex-col gap-6">
             <span className="font-heading font-semibold text-base leading-[21px] text-foreground">
