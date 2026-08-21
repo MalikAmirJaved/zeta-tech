@@ -56,7 +56,7 @@ export function TrustedBy() {
 
         {/* Satisfied Partners Label */}
         <div className="flex items-center gap-4 mb-8">
-          <span className="font-mono  text-[10px] tracking-[2px] uppercase text-accent whitespace-nowrap">
+          <span className="font-mono font-bold text-[10px] leading-none tracking-[2px] uppercase text-accent whitespace-nowrap">
             SATISFIED PARTNERS
           </span>
           <div className="flex-1 h-px bg-accent/40" />
