@@ -85,13 +85,13 @@ export function Platforms() {
           {platforms.map((platform) => (
             <div
               key={platform.title}
-              className="bg-white border border-border rounded-2xl p-8 flex flex-col gap-4 h-[232px]"
+              className="bg-white border border-border rounded-2xl p-8 flex flex-col gap-4"
             >
               {/* Status Indicator */}
               <StatusIndicator />
 
               {/* Text Content */}
-              <div className="flex flex-col gap-2.5 flex-1">
+              <div className="flex flex-col gap-2.5">
                 <h3 className="font-heading font-bold text-[28px] leading-[36px] text-foreground">
                   {platform.title}
                 </h3>
@@ -100,16 +100,14 @@ export function Platforms() {
                 </p>
               </div>
 
-              {/* Footer Link */}
-              <div className="flex items-end">
-                <a
-                  href="#"
-                  className="inline-flex items-center gap-2 text-primary font-heading font-bold text-sm leading-[18px] hover:underline"
-                >
-                  Explore
-                  <ArrowRight className="w-3 h-3" />
-                </a>
-              </div>
+              {/* Footer Link - mt-auto pushes this to bottom */}
+              <a
+                href="#"
+                className="mt-auto inline-flex items-center gap-2 text-primary font-heading font-bold text-sm leading-[18px] hover:underline"
+              >
+                Explore
+                <ArrowRight className="w-3 h-3" />
+              </a>
             </div>
           ))}
         </div>
