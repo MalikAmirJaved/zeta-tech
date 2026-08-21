@@ -78,33 +78,53 @@ export function TrustedBy() {
           ))}
         </div>
 
-          <div className="flex-1 h-px bg-accent/40" />
-
         {/* Badges */}
-        <div className="flex flex-col md:flex-row items-start pt-8 ">
-          {badges.map((badge, index) => {
-            const Icon = badge.icon;
-            return (
-              <div
-                key={badge.title}
-                className={`flex items-center gap-4 flex-1 ${
-                  index < badges.length - 1 ? "md:border-r md:border-border md:pr-6" : ""
-                }`}
-              >
-                <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
-                  <Icon className="w-5 h-5 text-primary-foreground" />
-                </div>
-                <div>
-                  <h4 className="font-heading font-bold text-sm text-foreground mb-0.5">
-                    {badge.title}
-                  </h4>
-                  <p className="font-sans text-xs text-muted-foreground">
-                    {badge.description}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
+        <div className="flex flex-col md:flex-row items-center pt-8 border-t border-accent/40">
+          <div className="flex items-center gap-4 flex-1">
+            <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
+              <Shield className="w-5 h-5 text-primary-foreground" />
+            </div>
+            <div>
+              <h4 className="font-heading font-bold text-sm text-foreground mb-0.5">
+                Certified Data Center (PTCL Rated-3)
+              </h4>
+              <p className="font-sans text-xs text-muted-foreground">
+                Tier-3 certified infrastructure
+              </p>
+            </div>
+          </div>
+
+          <div className="hidden md:block w-px h-10 bg-border mx-6" />
+
+          <div className="flex items-center gap-4 flex-1">
+            <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
+              <Globe className="w-5 h-5 text-primary-foreground" />
+            </div>
+            <div>
+              <h4 className="font-heading font-bold text-sm text-foreground mb-0.5">
+                100% Data Residency in Pakistan
+              </h4>
+              <p className="font-sans text-xs text-muted-foreground">
+                Your data never leaves the country
+              </p>
+            </div>
+          </div>
+
+          <div className="hidden md:block w-px h-10 bg-border mx-6" />
+
+          <div className="flex items-center gap-4 flex-1">
+            <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
+              <Activity className="w-5 h-5 text-primary-foreground" />
+            </div>
+            <div>
+              <h4 className="font-heading font-bold text-sm text-foreground mb-0.5">
+                99.9% Guaranteed Availability
+              </h4>
+              <p className="font-sans text-xs text-muted-foreground">
+                Enterprise-grade uptime SLA
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
