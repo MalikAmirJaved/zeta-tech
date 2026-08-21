@@ -15,18 +15,18 @@ export function CTA() {
           src="/images/cta/7f965434eac970a1418b6c0efa72f239261dacda.png"
           alt=""
           fill
-          className="object-cover"
+          className="object-cover opacity-[0.2]"
         />
       </div>
 
       {/* Accent Lines */}
       <div
-        className="absolute left-[-120px] top-1/2 w-[240px] h-0.5 bg-primary opacity-[0.18]"
-        style={{ transform: "translateY(-50%) rotate(-12deg)" }}
+        className="absolute left-[-120px] w-[240px] h-[2px] bg-primary opacity-[0.18]"
+        style={{ top: "calc(50% - 1px - 49.4px)", transform: "rotate(-12deg)" }}
       />
       <div
-        className="absolute right-[-120px] top-1/2 w-[240px] h-0.5 bg-primary opacity-[0.18]"
-        style={{ transform: "translateY(-50%) rotate(12deg)" }}
+        className="absolute right-[-120px] w-[240px] h-[2px] bg-primary opacity-[0.18]"
+        style={{ top: "calc(50% - 1px + 0.5px)", transform: "rotate(12deg)" }}
       />
 
       {/* Content */}
