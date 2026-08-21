@@ -20,6 +20,9 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Zeta Tech - Powering Sovereign Digital Infrastructure",
   description: "Zeta Technologies delivers high-performance telecommunications backbone systems, sovereign cloud platforms, and intelligent automation across Pakistan's enterprise landscape.",
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
