@@ -17,7 +17,7 @@ export function Hero() {
       </video>
       
       {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-dark/70" />
+      <div className="absolute inset-0 bg-dark-overlay" />
       
       <div className="relative z-10 max-w-[1728px] mx-auto px-6 lg:px-[144px] h-full flex items-center py-[120px]">
         <div className="flex flex-col lg:flex-row items-center gap-[60px] w-full">

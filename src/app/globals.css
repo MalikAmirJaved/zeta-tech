@@ -77,6 +77,7 @@
 
   /* Dark Theme Colors */
   --zeta-dark: #0C0C0E;
+  --zeta-dark-overlay: #0C0C0EE5;
   --zeta-darker: #141416;
   --zeta-dark-border: #1E1E20;
   --zeta-dark-surface: #0F1828;
@@ -146,6 +147,7 @@
 
   /* Dark Theme Utilities */
   .bg-dark { background-color: var(--zeta-dark); }
+  .bg-dark-overlay { background-color: var(--zeta-dark-overlay); }
   .bg-dark-darker { background-color: var(--zeta-darker); }
   .bg-dark-surface { background-color: var(--zeta-dark-surface); }
   .bg-dark-surface-2 { background-color: var(--zeta-dark-surface-2); }
