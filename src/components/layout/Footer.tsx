@@ -88,9 +88,19 @@ export function Footer() {
         </div>
       </div>
 
-      {/* Large ZETA text at bottom */}
-      <div className="relative w-full flex justify-center pt-10 pb-0 overflow-hidden">
-
+      {/* ZETA image banner */}
+      <div className="w-full flex justify-center pb-0 overflow-hidden">
+        <div className="w-full mx-auto px-6 lg:px-[144px]">
+          <Image
+            src="/zeta.png"
+            alt="ZETA"
+            width={1728}
+            height={364}
+            // fill
+            className="w-full h-auto object-contain"
+            priority
+          />
+        </div>
       </div>
     </footer>
   );
