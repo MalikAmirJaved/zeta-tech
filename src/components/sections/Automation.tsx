@@ -17,7 +17,7 @@ export function Automation() {
     <section className="bg-off-white py-20 px-6 lg:px-[144px] overflow-hidden">
       <div className="max-w-[1440px] mx-auto">
         {/* Icons Arc Section */}
-        <div className="relative h-[280px] mb-8">
+        <div className="relative h-[280px] mb-8 w-full mx-auto ">
           {/* Background Arc */}
           <div className="absolute inset-0 flex items-end justify-center">
             <img
@@ -28,9 +28,9 @@ export function Automation() {
           </div>
 
           {/* Icons Container */}
-          <div className="relative flex items-center justify-center gap-4 lg:gap-8">
+          <div className="relative flex items-center">
             {/* Left Icons */}
-            <div className="flex items-end gap-4 lg:gap-8">
+            <div className="flex items-end gap-4 lg:gap-8 justify-between">
               <div className="flex flex-col items-center">
                 <div className="w-16 h-16 rounded-full bg-card border border-border flex items-center justify-center shadow-sm">
                   <img src="/images/wifi.svg" alt="Connectivity" className="w-8 h-8" />
