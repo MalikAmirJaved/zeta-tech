@@ -90,11 +90,11 @@ export function Automation() {
         </div>
 
         {/* Content Section */}
-        <div className="relative text-center">
+        <div className="relative bottom-40 text-center ">
           {/* Tagline Pill */}
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-red-100 bg-red-50 mb-5">
             <span className="w-1.5 h-1.5 rounded-full bg-red-600" />
-            <span className="text-red-600 font-heading font-bold text-[11px] tracking-[3px] uppercase">
+            <span className="text-red-600 font-heading font-semibold text-[11px] tracking-[3px] uppercase">
               OUR CAPABILITIES
             </span>
           </div>
