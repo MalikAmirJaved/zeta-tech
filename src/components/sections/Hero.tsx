@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 
 export function Hero() {
   return (
-    <section className="relative h-screen overflow-hidden">
+    <section className="relative overflow-hidden">
       {/* Video Background */}
       <video
         autoPlay
