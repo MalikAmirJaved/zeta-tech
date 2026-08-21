@@ -1,113 +1,106 @@
 "use client";
 
-const footerLinks = {
-  products: [
-    { label: "ConnectHub", href: "#" },
-    { label: "CloudHub", href: "#" },
-    { label: "Zekil", href: "#" },
-  ],
-  company: [
-    { label: "About", href: "#about" },
-    { label: "Services", href: "#services" },
-    { label: "Careers", href: "#careers" },
-  ],
-  resources: [
-    { label: "Blogs", href: "#insights" },
-    { label: "Events", href: "#insights" },
-    { label: "News", href: "#insights" },
-  ],
-};
+import Image from "next/image";
+
+const navItems = [
+  { label: "About", href: "#about" },
+  { label: "Services", href: "#services" },
+  { label: "Products", href: "#products" },
+  { label: "Blogs & Events", href: "#insights" },
+  { label: "Careers", href: "#careers" },
+];
+
+const socialLinks = [
+  { label: "Facebook", href: "#", icon: "/images/Vector (8).svg" },
+  { label: "X", href: "#", icon: "/images/Vector (9).svg" },
+  { label: "LinkedIn", href: "#", icon: "/images/Vector (10).svg" },
+  { label: "Instagram", href: "#", icon: "/images/Vector (11).svg" },
+];
 
 export function Footer() {
   return (
-    <footer className="bg-dark border-t border-dark">
-      <div className="max-w-[1728px] mx-auto px-6 lg:px-[144px] py-16">
-        <div className="grid md:grid-cols-4 gap-12 mb-12">
-          {/* Logo & Description */}
-          <div className="md:col-span-1">
-            <a href="/" className="flex items-center mb-6">
-              <img
+    <footer className="bg-white overflow-hidden">
+      {/* top section */}
+      <div className="max-w-[1440px] mx-auto">
+        {/* Top Row: 3 columns */}
+        <div className="grid grid-cols-[1fr_auto_1fr] items-baseline pt-20">
+          {/* Left - Follow Us */}
+          <div className="flex flex-col gap-6">
+            <span className="font-heading font-semibold text-base leading-[21px] text-foreground">
+              Follow Us
+            </span>
+            <div className="flex items-center gap-3">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  aria-label={social.label}
+                  className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center hover:bg-primary/20 transition-colors"
+                >
+                  <Image
+                    src={social.icon}
+                    alt={social.label}
+                    width={18}
+                    height={18}
+                    className="w-[18px] h-[18px]"
+                  />
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Center - Logo + Nav */}
+          <div className="flex flex-col items-center gap-10">
+            <a href="/">
+              <Image
                 src="/images/logo.png"
                 alt="Zeta Tech"
-                className="h-16 w-auto"
+                width={77}
+                height={76}
+                className="w-[77px] h-[76px]"
               />
             </a>
-            <p className="font-sans text-sm text-dark-muted leading-[21px]">
-              Powering Sovereign Digital Infrastructure across Pakistan.
-            </p>
+            <div className="flex items-center gap-[38.4px]">
+              {navItems.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className="font-heading font-semibold text-base leading-[21px] text-foreground hover:text-primary transition-colors"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </div>
           </div>
 
-          {/* Products */}
-          <div>
-            <h4 className="font-heading font-semibold text-sm text-white mb-4 uppercase tracking-wider">
-              Products
-            </h4>
-            <ul className="flex flex-col gap-3">
-              {footerLinks.products.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="font-sans text-sm text-dark-muted hover:text-white transition-colors"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Company */}
-          <div>
-            <h4 className="font-heading font-semibold text-sm text-white mb-4 uppercase tracking-wider">
-              Company
-            </h4>
-            <ul className="flex flex-col gap-3">
-              {footerLinks.company.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="font-sans text-sm text-dark-muted hover:text-white transition-colors"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Resources */}
-          <div>
-            <h4 className="font-heading font-semibold text-sm text-white mb-4 uppercase tracking-wider">
-              Resources
-            </h4>
-            <ul className="flex flex-col gap-3">
-              {footerLinks.resources.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="font-sans text-sm text-dark-muted hover:text-white transition-colors"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
+          {/* Right - Email Subscribe */}
+          <div className="flex flex-col items-end gap-6">
+            <div className="relative w-[354px] h-[52px]">
+              <input
+                type="email"
+                placeholder="Enter Email"
+                className="w-full h-full px-4 border border-border rounded-2xl font-heading font-semibold text-base leading-[21px] text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
+              />
+            </div>
+            <button className="w-[126px] h-[51px] border border-primary rounded-2xl font-heading font-semibold text-base leading-[21px] text-primary hover:bg-primary hover:text-white transition-colors">
+              Subscribe
+            </button>
           </div>
         </div>
+      </div>
 
-        {/* Bottom Bar */}
-        <div className="border-t border-dark pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="font-sans text-xs text-dark-muted">
-            © {new Date().getFullYear()} Zeta Technologies. All rights reserved.
-          </p>
-          <div className="flex items-center gap-6">
-            <a href="#" className="font-sans text-xs text-dark-muted hover:text-white transition-colors">
-              Privacy Policy
-            </a>
-            <a href="#" className="font-sans text-xs text-dark-muted hover:text-white transition-colors">
-              Terms of Service
-            </a>
-          </div>
+      {/* ZETA image banner */}
+      <div className="w-full flex justify-center pb-0 pt-40 overflow-hidden">
+        <div className="w-full mx-auto px-6 ">
+          <Image
+            src="/zeta.png"
+            alt="ZETA"
+            width={1728}
+            height={364}
+            // fill
+            className="w-full h-auto object-contain"
+            priority
+          />
         </div>
       </div>
     </footer>

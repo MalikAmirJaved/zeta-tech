@@ -52,105 +52,37 @@ export function Hero() {
 
             {/* Buttons */}
             <div className="flex items-center gap-4">
-              <a
-                href="#contact"
-                className="bg-primary text-primary-foreground font-heading font-semibold text-[15px] leading-5 px-7 py-4 rounded-[10px] hover:opacity-90 transition-opacity"
-              >
-                Talk to Zeta
-              </a>
-              <a
-                href="#about"
-                className="border border-white/70 text-white font-heading font-semibold text-[15px] leading-5 px-7 py-4 rounded-[10px] hover:bg-white/10 transition-colors flex items-center gap-2"
-              >
-                About Zeta
-                <ArrowRight className="w-3.5 h-3.5" strokeWidth={2} />
-              </a>
-            </div>
+  <a
+    href="#contact"
+    className="group bg-primary text-primary-foreground font-heading font-semibold text-[15px] leading-5 px-7 py-4 rounded-[10px] hover:opacity-90 transition-opacity flex items-center gap-2"
+  >
+    Talk to Zeta
+    <ArrowRight
+      className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1"
+      strokeWidth={2}
+    />
+  </a>
+
+  <a
+    href="#about"
+    className="group border border-white/70 text-white font-heading font-semibold text-[15px] leading-5 px-7 py-4 rounded-[10px] hover:bg-white/10 transition-colors flex items-center gap-2"
+  >
+    About Zeta
+    <ArrowRight
+      className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1"
+      strokeWidth={2}
+    />
+  </a>
+</div>
           </div>
 
           {/* Hero Right - NOC Dashboard */}
-          <div className="w-full max-w-[580px] bg-dark-darker/90 backdrop-blur-sm border border-primary/40 rounded-2xl p-6 shadow-[2px_0px_9.4px_10px_rgba(237,0,27,0.11)]">
-            {/* NOC Top Bar */}
-            <div className="flex items-center justify-between mb-5">
-              <div className="flex items-center gap-2.5">
-                <span className="w-2 h-2 rounded-full bg-accent" />
-                <span className="font-mono font-bold text-xs text-white uppercase">
-                  NETWORK OPERATIONS
-                </span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-accent" />
-                <span className="font-mono text-[10px] text-dark-muted">LIVE STREAM OK</span>
-              </div>
-            </div>
-
-            {/* NOC Grid */}
-            <div className="grid grid-cols-2 gap-3 mb-5">
-              {/* Uptime Tile */}
-              <div className="bg-dark border border-dark rounded-lg p-4">
-                <span className="font-mono text-[10px] text-dark-muted block mb-1">UPTIME (SLA)</span>
-                <span className="font-mono font-bold text-xl text-accent">99.97%</span>
-              </div>
-
-              {/* Capacity Tile */}
-              <div className="bg-dark border border-dark rounded-lg p-4">
-                <span className="font-mono text-[10px] text-dark-muted block mb-1">CONNECTED CAPACITY</span>
-                <span className="font-mono font-bold text-xl text-white">1.2 TBPS</span>
-              </div>
-
-              {/* Gateways Tile */}
-              <div className="bg-dark border border-dark rounded-lg p-4">
-                <span className="font-mono text-[10px] text-dark-muted block mb-1">ACTIVE GATEWAYS</span>
-                <span className="font-mono font-bold text-xl text-white">4 / 4 SECURE</span>
-              </div>
-
-              {/* Threat Level Tile */}
-              <div className="bg-dark border border-dark rounded-lg p-4">
-                <span className="font-mono text-[10px] text-dark-muted block mb-1">THREAT LEVEL</span>
-                <span className="font-mono font-bold text-xl text-primary">LOW / STABLE</span>
-              </div>
-            </div>
-
-            {/* Telemetry Chart */}
-            <div className="bg-dark border border-dark rounded-lg p-4 mb-5">
-              <span className="font-mono text-[10px] text-dark-muted block mb-2">REAL-TIME TRAFFIC SPECTRA</span>
-              <div className="relative h-[60px]">
-                {/* Grid lines */}
-                <div className="absolute inset-0 flex flex-col justify-between">
-                  <div className="border-t border-dark h-0" />
-                  <div className="border-t border-dark h-0" />
-                  <div className="border-t border-dark h-0" />
-                  <div className="border-t border-dark h-0" />
-                </div>
-                {/* Waveform SVG */}
-                <svg className="absolute inset-0 w-full h-full" viewBox="0 0 500 60" preserveAspectRatio="none">
-                  <path
-                    d="M0 30 Q25 10 50 30 T100 30 T150 30 T200 30 T250 30 T300 30 T350 30 T400 30 T450 30 T500 30"
-                    fill="none"
-                    stroke="var(--primary)"
-                    strokeWidth="2"
-                  />
-                </svg>
-              </div>
-            </div>
-
-            {/* Status Rows */}
-            <div className="flex flex-col gap-2">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                  <span className="font-mono text-[11px] text-white">T-CLS Border Gateway</span>
-                </div>
-                <span className="font-mono text-[11px] text-accent">ACTIVE</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-dark-muted" />
-                  <span className="font-mono text-[11px] text-dark-muted">LDI Operations</span>
-                </div>
-                <span className="font-mono text-[11px] text-dark-muted">NOMINAL</span>
-              </div>
-            </div>
+          <div className="w-full max-w-[580px]">
+            <img
+              src="/images/HeroRight.png"
+              alt="NOC Dashboard"
+              className="w-full h-auto rounded-2xl"
+            />
           </div>
         </div>
       </div>

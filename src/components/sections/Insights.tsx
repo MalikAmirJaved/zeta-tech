@@ -1,79 +1,100 @@
 "use client";
 
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 
-const insights = [
+const articles = [
   {
-    title: "Sovereign Cloud Architecture in Modern Telecommunication Systems",
-    category: "Infrastructure",
-    date: "Jan 15, 2025",
-    image: "/images/insight-1.jpg",
+    title: "Sovereign Cloud Architectures in Modern Telecommunication Systems",
+    category: "INDUSTRY WHITE PAPER",
+    description:
+      "An in-depth regulatory and architectural review of localization standards, hardware trust zones, and high-performance low-latency redundancies across regional transit corridors.",
+    image: "/images/Article 1 Image.png",
   },
   {
     title: "Terrestrial Landing Station Reaches Operational Milestone",
-    category: "Milestone",
-    date: "Jan 10, 2025",
-    image: "/images/insight-2.jpg",
+    category: "INDUSTRY WHITE PAPER",
+    description:
+      "Path diversity validation testing finalized with 100% telemetry target achievements. Successful operations in major corridors.",
+    image: "/images/Article 1 Image (1).png",
   },
   {
     title: "Network Intelligence Automation and Traffic Shaping Models",
-    category: "Technology",
-    date: "Jan 5, 2025",
-    image: "/images/insight-3.jpg",
+    category: "INDUSTRY WHITE PAPER",
+    description:
+      "Implementing proactive deep diagnostics to secure routing redundancies throughout core corridors. Protecting packets at runtime.",
+    image: "/images/Article 1 Image (2).png",
   },
 ];
 
 export function Insights() {
   return (
-    <section id="insights" className="bg-card py-20 px-6 lg:px-[144px]">
-      <div className="max-w-[1440px] mx-auto text-center">
-        {/* Tagline Pill */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-primary/20 bg-primary/[0.06] mb-5">
-          <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-          <span className="text-primary font-heading font-bold text-[11px] tracking-[3px] uppercase">
-            NEWS & INSIGHTS
-          </span>
+    <section
+      id="insights"
+      className="bg-secondary py-[120px] px-6 lg:px-[144px]"
+    >
+      <div className="max-w-[1440px] mx-auto flex flex-col items-center gap-[50px]">
+        {/* Centered Headings */}
+        <div className="flex flex-col items-center gap-4">
+          {/* Tagline Pill */}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-primary/20 bg-primary/[0.06]">
+            <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+            <span className="text-primary font-heading font-bold text-[11px] tracking-[3px] uppercase">
+              BLOGS & EVENTS
+            </span>
+          </div>
+
+          {/* Title */}
+          <h2 className="font-heading font-bold text-[44px] leading-[57px] text-foreground text-center">
+            Latest Insights & System Updates
+          </h2>
         </div>
 
-        {/* Heading */}
-        <h2 className="font-heading font-bold text-[44px] leading-[57px] text-foreground mb-12">
-          Latest Insights & System Updates
-        </h2>
-
-        {/* Insight Cards */}
-        <div className="grid md:grid-cols-3 gap-8 mb-10">
-          {insights.map((insight) => (
+        {/* Article Cards */}
+        <div className="grid md:grid-cols-3 gap-10">
+          {articles.map((article) => (
             <div
-              key={insight.title}
-              className="bg-background border border-border rounded-2xl overflow-hidden text-left hover:shadow-lg transition-shadow"
+              key={article.title}
+              className="bg-white rounded-2xl overflow-hidden flex flex-col"
             >
-              {/* Image Placeholder */}
-              <div className="h-48 bg-dark relative">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-dark-muted text-sm">{insight.category}</span>
-                </div>
+              {/* Image - Fixed height */}
+              <div className="relative w-full h-[334px] shrink-0">
+                <Image
+                  src={article.image}
+                  alt={article.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 453px"
+                  className="object-cover"
+                />
               </div>
-              
-              <div className="p-6">
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="text-primary font-mono text-[10px] tracking-[2px] uppercase">
-                    {insight.category}
-                  </span>
-                  <span className="text-muted-foreground text-xs">·</span>
-                  <span className="text-muted-foreground text-xs">{insight.date}</span>
-                </div>
-                
-                <h3 className="font-heading font-bold text-lg text-foreground mb-3 line-clamp-2">
-                  {insight.title}
+
+              {/* Content - Fixed padding */}
+              <div className="flex flex-col gap-3 p-5 pt-6 flex-1">
+                {/* Category */}
+                <span className="font-heading font-bold text-[11px] leading-[14px] tracking-[1px] text-primary uppercase">
+                  {article.category}
+                </span>
+
+                {/* Title */}
+                <h3 className="font-heading font-bold text-2xl leading-[31px] text-foreground">
+                  {article.title}
                 </h3>
-                
-                <a
-                  href="#"
-                  className="inline-flex items-center gap-2 text-primary font-heading font-semibold text-sm hover:underline"
-                >
-                  Read Article
-                  <ArrowRight className="w-4 h-4" />
-                </a>
+
+                {/* Description */}
+                <p className="font-sans text-[15px] leading-[22px] text-muted-foreground">
+                  {article.description}
+                </p>
+
+                {/* Read Article Link */}
+                <div className="mt-auto pt-2">
+                  <a
+                    href="#"
+                    className="inline-flex items-center gap-1 text-dark font-heading font-semibold text-sm leading-[18px] hover:underline"
+                  >
+                    Read Article
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </a>
+                </div>
               </div>
             </div>
           ))}
@@ -82,7 +103,7 @@ export function Insights() {
         {/* CTA Button */}
         <a
           href="#insights"
-          className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-heading font-semibold text-[15px] leading-5 px-7 py-4 rounded-[10px] hover:opacity-90 transition-opacity"
+          className="inline-flex items-center gap-2 bg-primary text-white font-heading font-bold text-[15px] leading-5 px-7 py-4 rounded-[10px] hover:opacity-90 transition-opacity"
         >
           View All Insights
           <ArrowRight className="w-4 h-4" />

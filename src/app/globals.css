@@ -62,7 +62,7 @@
   --secondary-foreground: #333333;
   --muted: #F3F4F6;
   --muted-foreground: #666666;
-  --accent: #00C94F;
+  --accent: #136027;
   --accent-foreground: #FFFFFF;
   --destructive: #ED001B;
   --border: #E5E7EB;
@@ -74,6 +74,9 @@
   --chart-4: #136027;
   --chart-5: #999999;
   --radius: 0.625rem;
+
+  /* Light Theme Colors */
+  --zeta-off-white: #FFFFFD;
 
   /* Dark Theme Colors */
   --zeta-dark: #0C0C0E;
@@ -153,4 +156,7 @@
   .bg-dark-surface-2 { background-color: var(--zeta-dark-surface-2); }
   .border-dark { border-color: var(--zeta-dark-border); }
   .text-dark-muted { color: var(--muted-foreground-dark); }
+
+  /* Light Theme Utilities */
+  .bg-off-white { background-color: var(--zeta-off-white); }
 }

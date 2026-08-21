@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
+import { ArrowRight, ChevronDown, Menu, X } from "lucide-react";
 
 const navItems = [
   { label: "About", href: "#about" },
@@ -10,6 +11,9 @@ const navItems = [
   { label: "Blogs & Events", href: "#insights" },
   { label: "Careers", href: "#careers" },
 ];
+
+const MegaProducts = dynamic(() => import("./MegaProducts").then((m) => m.MegaProducts), { ssr: false });
+const MegaServices = dynamic(() => import("./MegaServices").then((m) => m.MegaServices), { ssr: false });
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -29,16 +33,31 @@ export function Header() {
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex items-center gap-[38.4px]">
           {navItems.map((item) => (
-            <a
-              key={item.label}
-              href={item.href}
-              className="flex items-center gap-1.5 text-white font-heading font-semibold text-base hover:text-primary transition-colors"
-            >
-              {item.label}
-              {item.hasDropdown && (
-                <ChevronDown className="w-3 h-3" strokeWidth={2.4} />
+            <div key={item.label} className="relative group">
+              <a
+                href={item.href}
+                className="flex items-center gap-1.5 text-white font-heading font-semibold text-base hover:text-primary transition-colors"
+              >
+                {item.label}
+                {item.hasDropdown && (
+                  <ChevronDown className="w-3 h-3" strokeWidth={2.4} />
+                )}
+              </a>
+
+              {/* Products Mega Menu — fixed to viewport, full width */}
+              {item.label === "Products" && (
+                <div className="invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-150 pointer-events-none group-hover:pointer-events-auto fixed left-0 right-0 top-[136px] w-screen z-50">
+                  <MegaProducts />
+                </div>
               )}
-            </a>
+
+              {/* Services Mega Menu — fixed to viewport, full width */}
+              {item.label === "Services" && (
+                <div className="invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-150 pointer-events-none group-hover:pointer-events-auto fixed left-0 right-0 top-[136px] w-screen z-50">
+                  <MegaServices />
+                </div>
+              )}
+            </div>
           ))}
         </nav>
 
@@ -46,9 +65,13 @@ export function Header() {
         <div className="hidden lg:block">
           <a
             href="#contact"
-            className="bg-primary text-primary-foreground font-heading font-semibold text-sm px-5 py-2.5 rounded-[10px] hover:opacity-90 transition-opacity inline-block"
+            className="bg-primary text-primary-foreground font-heading font-semibold text-sm px-5 py-2.5 rounded-[10px] hover:opacity-90 transition-opacity inline-flex items-center gap-2"
           >
             Talk to Zeta
+            <ArrowRight
+              size={16}
+              className="transition-transform duration-200 group-hover:translate-x-1"
+            />
           </a>
         </div>
 
