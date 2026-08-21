@@ -33,21 +33,21 @@ export function Automation() {
             <div className="flex items-end gap-4 lg:gap-8">
               <div className="flex flex-col items-center">
                 <div className="w-16 h-16 rounded-full bg-card border border-border flex items-center justify-center shadow-sm">
-                  <img src="/images/icon-circle.svg" alt="Connectivity" className="w-8 h-8" />
+                  <img src="/images/wifi.svg" alt="Connectivity" className="w-8 h-8" />
                 </div>
                 <span className="mt-2 font-sans text-xs text-foreground text-center">Connectivity</span>
               </div>
 
               <div className="flex flex-col items-center mb-4">
                 <div className="w-16 h-16 rounded-full bg-card border border-border flex items-center justify-center shadow-sm">
-                  <img src="/images/icon-circle (1).svg" alt="Network Intelligence" className="w-8 h-8" />
+                  <img src="/images/Vector (4).svg" alt="Network Intelligence" className="w-8 h-8" />
                 </div>
                 <span className="mt-2 font-sans text-xs text-foreground text-center">Network Intelligence</span>
               </div>
 
               <div className="flex flex-col items-center mb-8">
                 <div className="w-16 h-16 rounded-full bg-card border border-border flex items-center justify-center shadow-sm">
-                  <img src="/images/icon-circle (2).svg" alt="Cloud Computing" className="w-8 h-8" />
+                  <img src="/images/cloud.svg" alt="Cloud Computing" className="w-8 h-8" />
                 </div>
                 <span className="mt-2 font-sans text-xs text-foreground text-center">Cloud Computing</span>
               </div>
@@ -56,7 +56,7 @@ export function Automation() {
             {/* Center Icon */}
             <div className="flex flex-col items-center mb-12">
               <div className="w-20 h-20 rounded-full bg-primary flex items-center justify-center shadow-lg">
-                <img src="/images/icon-circle (3).svg" alt="Intelligent Automation" className="w-10 h-10" />
+                <img src="/images/Vector (5).svg" alt="Intelligent Automation" className="w-10 h-10" />
               </div>
               <span className="mt-2 font-sans text-sm font-semibold text-primary text-center">Intelligent Automation</span>
             </div>
@@ -65,21 +65,21 @@ export function Automation() {
             <div className="flex items-end gap-4 lg:gap-8">
               <div className="flex flex-col items-center mb-8">
                 <div className="w-16 h-16 rounded-full bg-card border border-border flex items-center justify-center shadow-sm">
-                  <img src="/images/icon-circle (4).svg" alt="Wholesale Voice" className="w-8 h-8" />
+                  <img src="/images/Vector (6).svg" alt="Wholesale Voice" className="w-8 h-8" />
                 </div>
                 <span className="mt-2 font-sans text-xs text-foreground text-center">Wholesale Voice</span>
               </div>
 
               <div className="flex flex-col items-center mb-4">
                 <div className="w-16 h-16 rounded-full bg-card border border-border flex items-center justify-center shadow-sm">
-                  <img src="/images/icon-circle (5).svg" alt="A2P Messaging" className="w-8 h-8" />
+                  <img src="/images/Vector (7).svg" alt="A2P Messaging" className="w-8 h-8" />
                 </div>
                 <span className="mt-2 font-sans text-xs text-foreground text-center">A2P Messaging</span>
               </div>
 
               <div className="flex flex-col items-center">
                 <div className="w-16 h-16 rounded-full bg-card border border-border flex items-center justify-center shadow-sm">
-                  <img src="/images/icon-circle (6).svg" alt="CPaaS" className="w-8 h-8" />
+                  <img src="/images/code.svg" alt="CPaaS" className="w-8 h-8" />
                 </div>
                 <span className="mt-2 font-sans text-xs text-foreground text-center">CPaaS</span>
               </div>
