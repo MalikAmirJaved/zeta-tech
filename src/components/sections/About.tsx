@@ -63,26 +63,50 @@ export function About() {
           </p>
 
           <div className="grid grid-cols-2 gap-4">
-            {features.map((feature) => {
-              const Icon = feature.icon;
-              return (
-                <div
-                  key={feature.title}
-                  className="bg-secondary rounded-xl p-6"
-                >
-                  {/* <div className="w-10 h-10 rounded-full border border-primary/30 flex items-center justify-center mb-4"> */}
-                    <Icon className="w-6 h-6 text-primary mb-4.25" strokeWidth={1.5} />
-                  {/* </div> */}
-                  <h3 className="font-heading font-bold text-2xl text-foreground mb-1">
-                    {feature.title}
-                  </h3>
-                  <p className="font-mono text-[10px] tracking-[1px] uppercase text-muted-foreground">
-                    {feature.subtitle}
-                  </p>
-                </div>
-              );
-            })}
+    {features.map((feature) => {
+      const Icon = feature.icon;
+      return (
+        <div
+          key={feature.title}
+          className="
+            group relative overflow-hidden
+            bg-secondary/80 backdrop-blur-sm
+            border border-border/60
+            rounded-2xl
+            px-5 py-8
+            shadow-[0_1px_2px_rgba(0,0,0,0.04),0_4px_12px_rgba(0,0,0,0.03)]
+            transition-all duration-300 ease-out
+            hover:shadow-[0_4px_20px_rgba(0,0,0,0.08)]
+            hover:border-primary/20
+            hover:-translate-y-0.5
+          "
+        >
+          {/* Soft gradient accent on hover */}
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+
+          <div className="relative z-10">
+            {/* Icon */}
+            <div className="w-10 h-10">
+              <Icon
+                className="w-5 h-5 text-primary"
+                strokeWidth={1.75}
+              />              
+            </div>
+
+            {/* Title */}
+            <h3 className="font-heading font-bold text-[22px] leading-tight text-foreground mb-2.5">
+              {feature.title}
+            </h3>
+
+            {/* Subtitle */}
+            <p className="text-[12px] font-medium uppercase tracking-[0.08em] text-muted-foreground/90">
+              {feature.subtitle}
+            </p>
           </div>
+        </div>
+      );
+    })}
+  </div>
         </div>
       </div>
     </section>
