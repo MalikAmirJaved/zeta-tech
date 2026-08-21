@@ -24,7 +24,7 @@ const platforms = [
 function StatusIndicator() {
   return (
     <div className="flex items-center gap-1.5">
-      <div className-="w-10 h-px bg-primary opacity-40" />
+      <div className="w-10 h-px bg-primary opacity-40" />
       <div className="w-1.5 h-1.5 rounded-full bg-primary" />
     </div>
   );
