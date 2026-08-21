@@ -9,7 +9,7 @@ const partners = [
   { name: "PTCL", image: "/images/trustedby/partner4.png" },
   { name: "CISCO", image: "/images/trustedby/partner5.png" },
   { name: "ACMETEL", image: "/images/trustedby/partner6.png" },
-  { name: "Transworld", image: "/images/trustedby/image 21.png" },
+  { name: "Transworld", image: "/images/trustedby/partner7.png" },
 ];
 
 const badges = [
@@ -46,11 +46,11 @@ export function TrustedBy() {
 
         {/* Heading */}
         <h2 className="font-heading font-bold text-[44px] leading-[57px] text-center text-foreground mb-5">
-          Trusted across <span className="text-primary">Pakistan&apos;s</span> enterprise landscape.
+          Trusted across <span className="text-primary">Pakistan&apos;s enterprise</span>  landscape.
         </h2>
 
         {/* Subheading */}
-        <p className="font-sans text-base leading-[21px] text-center text-muted-foreground mb-12 max-w-[900px] mx-auto">
+        <p className="font-sans text-base leading-[21px] text-center text-muted-foreground mb-12  mx-auto">
           From global technology partners to leading Pakistani institutions - banks, telcos, government, and enterprise - Zeta Technologies powers the workloads that move the country forward.
         </p>
 
@@ -72,7 +72,7 @@ export function TrustedBy() {
               <img
                 src={partner.image}
                 alt={partner.name}
-                className="h-[50px] w-auto object-contain opacity-80 hover:opacity-100 transition-opacity"
+                className="h-[50px] w-auto object-contain "
               />
             </div>
           ))}
