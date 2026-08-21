@@ -4,12 +4,23 @@ import { ArrowRight } from "lucide-react";
 
 export function Hero() {
   return (
-    <section className="relative bg-zeta-dark overflow-hidden">
-      {/* Background overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-zeta-dark/90 to-zeta-dark/90" />
+    <section className="relative h-screen overflow-hidden">
+      {/* Video Background */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover"
+      >
+        <source src="/herobackground.mp4" type="video/mp4" />
+      </video>
       
-      <div className="relative max-w-[1728px] mx-auto px-6 lg:px-[144px] py-[120px]">
-        <div className="flex flex-col lg:flex-row items-center gap-[60px]">
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-zeta-dark/70" />
+      
+      <div className="relative z-10 max-w-[1728px] mx-auto px-6 lg:px-[144px] h-full flex items-center py-[120px]">
+        <div className="flex flex-col lg:flex-row items-center gap-[60px] w-full">
           {/* Hero Left Content */}
           <div className="flex-1 max-w-[800px]">
             {/* Tagline Pill */}
@@ -58,7 +69,7 @@ export function Hero() {
           </div>
 
           {/* Hero Right - NOC Dashboard */}
-          <div className="w-full max-w-[580px] bg-zeta-darker border border-[rgba(237,0,27,0.41)] rounded-2xl p-6 shadow-[2px_0px_9.4px_10px_rgba(237,0,27,0.11)]">
+          <div className="w-full max-w-[580px] bg-zeta-darker/90 backdrop-blur-sm border border-[rgba(237,0,27,0.41)] rounded-2xl p-6 shadow-[2px_0px_9.4px_10px_rgba(237,0,27,0.11)]">
             {/* NOC Top Bar */}
             <div className="flex items-center justify-between mb-5">
               <div className="flex items-center gap-2.5">
