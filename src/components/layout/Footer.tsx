@@ -89,8 +89,8 @@ export function Footer() {
       </div>
 
       {/* ZETA image banner */}
-      <div className="w-full flex justify-center pb-0 overflow-hidden">
-        <div className="w-full mx-auto px-6 lg:px-[144px]">
+      <div className="w-full flex justify-center pb-0 pt-40 overflow-hidden">
+        <div className="w-full mx-auto px-6 ">
           <Image
             src="/zeta.png"
             alt="ZETA"
