@@ -46,11 +46,11 @@ export function TrustedBy() {
 
         {/* Heading */}
         <h2 className="font-heading font-bold text-[44px] leading-[57px] text-center text-foreground mb-5">
-          Trusted across <span className="text-primary">Pakistan&apos;s enterprise</span>  landscape.
+          Trusted across <span className="text-primary">Pakistan&apos;s enterprise</span> landscape.
         </h2>
 
         {/* Subheading */}
-        <p className="font-sans text-base leading-[21px] text-center text-muted-foreground mb-12  mx-auto">
+        <p className="font-sans text-base leading-[21px] text-center text-muted-foreground mb-12 mx-auto">
           From global technology partners to leading Pakistani institutions - banks, telcos, government, and enterprise - Zeta Technologies powers the workloads that move the country forward.
         </p>
 
@@ -72,7 +72,7 @@ export function TrustedBy() {
               <img
                 src={partner.image}
                 alt={partner.name}
-                className="h-[50px] w-auto object-contain "
+                className="h-[50px] w-auto object-contain"
               />
             </div>
           ))}
@@ -81,14 +81,14 @@ export function TrustedBy() {
           <div className="flex-1 h-px bg-accent/40" />
 
         {/* Badges */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-8">
+        <div className="flex flex-col md:flex-row items-start pt-8 ">
           {badges.map((badge, index) => {
             const Icon = badge.icon;
             return (
               <div
                 key={badge.title}
-                className={`flex items-center gap-4 ${
-                  index < badges.length - 1 ? "md:border-r md:border-border md:pr-8" : ""
+                className={`flex items-center gap-4 flex-1 ${
+                  index < badges.length - 1 ? "md:border-r md:border-border md:pr-6" : ""
                 }`}
               >
                 <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
