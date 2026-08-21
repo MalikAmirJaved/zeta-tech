@@ -48,7 +48,7 @@ export function Header() {
             href="#contact"
             className="bg-zeta-red text-zeta-white font-heading font-semibold text-sm px-5 py-2.5 rounded-[10px] hover:bg-red-700 transition-colors inline-block"
           >
-            Get Started
+            Talk to Zeta
           </a>
         </div>
 
