@@ -49,10 +49,10 @@ export function About() {
 
           <a
             href="#services"
-            className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-heading font-semibold text-[15px] leading-5 px-3.5 py-4 rounded-[10px] hover:opacity-90 transition-opacity"
+            className="group inline-flex items-center gap-2 bg-primary text-primary-foreground font-heading font-semibold text-[15px] leading-5 px-3.5 py-4 rounded-[10px]"
           >
             About Zeta
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:-rotate-30" />
           </a>
         </div>
 

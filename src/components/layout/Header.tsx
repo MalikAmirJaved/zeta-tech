@@ -65,12 +65,12 @@ export function Header() {
         <div className="hidden lg:block">
           <a
             href="#contact"
-            className="bg-primary text-primary-foreground font-heading font-semibold text-sm px-5 py-2.5 rounded-[10px] hover:opacity-90 transition-opacity inline-flex items-center gap-2"
+            className="group bg-primary text-primary-foreground font-heading font-semibold text-sm px-5 py-2.5 rounded-[10px] inline-flex items-center gap-2"
           >
             Talk to Zeta
             <ArrowRight
               size={16}
-              className="transition-transform duration-200 group-hover:translate-x-1"
+              className="transition-transform duration-200 group-hover:-rotate-30"
             />
           </a>
         </div>

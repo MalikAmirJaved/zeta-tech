@@ -47,10 +47,10 @@ export function CTA() {
         {/* CTA Button */}
         <a
           href="#contact"
-          className="inline-flex items-center gap-2.5 bg-primary text-white font-heading font-bold text-base leading-[21px] px-[30px] py-4 rounded-xl hover:opacity-90 transition-opacity"
+          className="group inline-flex items-center gap-2.5 bg-primary text-white font-heading font-bold text-base leading-[21px] px-[30px] py-4 rounded-xl"
         >
           Talk To Our Team
-          <ArrowRight className="w-4 h-4" />
+          <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:-rotate-30" />
         </a>
       </div>
     </section>

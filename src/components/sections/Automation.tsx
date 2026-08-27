@@ -112,10 +112,10 @@ export function Automation() {
           {/* CTA Button */}
           <a
             href="#services"
-            className="inline-flex items-center gap-2 bg-red-600 text-white font-heading font-semibold text-[15px] leading-5 px-7 py-4 rounded-[10px] hover:opacity-90 transition-opacity"
+            className="group inline-flex items-center gap-2 bg-red-600 text-white font-heading font-semibold text-[15px] leading-5 px-7 py-4 rounded-[10px]"
           >
             View All Services
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:-rotate-30" />
           </a>
         </div>
       </div>

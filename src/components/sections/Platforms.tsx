@@ -116,10 +116,10 @@ export function Platforms() {
         <div className="flex justify-center">
           <a
             href="#products"
-            className="inline-flex items-center gap-2 bg-primary text-white font-heading font-bold text-[15px] leading-5 px-7 py-4 rounded-[10px] hover:opacity-90 transition-opacity"
+            className="group inline-flex items-center gap-2 bg-primary text-white font-heading font-bold text-[15px] leading-5 px-7 py-4 rounded-[10px]"
           >
             View All Products
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:-rotate-30" />
           </a>
         </div>
       </div>

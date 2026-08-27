@@ -106,7 +106,13 @@ All colors MUST come from `globals.css` using semantic tokens. This ensures that
 - Use Next.js `Image` component for optimized images
 - SVG icons use Lucide React
 
-### 7. COMMIT CONVENTIONS
+### 8. BUTTON HOVER BEHAVIOR
+- On hover, button colors must NOT change (remove `hover:opacity-90`, `hover:bg-*`, `transition-opacity`, `transition-colors` from buttons)
+- Arrow icons in buttons must NOT translate on hover (remove `group-hover:translate-x-1`)
+- Arrow icons in buttons MUST rotate -30deg on hover using `group-hover:-rotate-30` to tilt slightly upward
+- Add `group` class to the button and `transition-transform duration-200 group-hover:rotate-[30deg]` to the arrow icon
+
+### 9. COMMIT CONVENTIONS
 - Format: `type(scope): description`
 - Types: feat, fix, style, refactor, docs, chore
 - Example: `feat(hero): implement hero section with NOC dashboard`
