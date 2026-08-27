@@ -89,7 +89,7 @@ export function Insights() {
                 <div className="mt-auto pt-2">
                   <a
                     href="#"
-                    className="inline-flex items-center gap-1 text-dark font-heading font-semibold text-sm leading-[18px] hover:underline"
+                    className="inline-flex items-center gap-1 text-primary font-semibold text-sm leading-[18px]"
                   >
                     Read Article
                     <ArrowRight className="w-3.5 h-3.5" />
