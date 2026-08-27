@@ -85,16 +85,16 @@ export function Insights() {
                   {article.description}
                 </p>
 
-                {/* Read Article Link */}
-                <div className="mt-auto pt-2">
-                  <a
-                    href="#"
-                    className="inline-flex items-center gap-1 text-primary font-semibold text-sm leading-[18px]"
-                  >
-                    Read Article
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </a>
-                </div>
+                 {/* Read Article Link */}
+                 <div className="mt-auto pt-2">
+                   <a
+                     href="#"
+                     className="group inline-flex items-center gap-1 text-primary font-semibold text-sm leading-[18px]"
+                   >
+                     Read Article
+                     <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:-rotate-30" />
+                   </a>
+                 </div>
               </div>
             </div>
           ))}

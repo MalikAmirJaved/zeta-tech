@@ -130,7 +130,11 @@ All colors MUST come from `globals.css` using semantic tokens. This ensures that
 - Ensure inner text becomes readable on hover by adding `group-hover:text-white` to text elements
 - For status dots/icons inside cells, add `group-hover:bg-white transition-colors` to maintain visibility
 
-### 11. COMMIT CONVENTIONS
+### 11. INLINE LINK HOVER BEHAVIOR
+- For inline text links with arrows (e.g., "Read Article"), add `group` to the link
+- Apply `transition-transform duration-200 group-hover:-rotate-30` to the arrow icon
+
+### 12. COMMIT CONVENTIONS
 - Format: `type(scope): description`
 - Types: feat, fix, style, refactor, docs, chore
 - Example: `feat(hero): implement hero section with NOC dashboard`
