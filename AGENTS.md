@@ -106,11 +106,18 @@ All colors MUST come from `globals.css` using semantic tokens. This ensures that
 - Use Next.js `Image` component for optimized images
 - SVG icons use Lucide React
 
+### 7. HEADER MEGA MENU HOVER BEHAVIOR
+- NEVER use pure CSS `group-hover` for dropdowns/mega menus that are `position: fixed` outside the parent hover area
+- Use React state (`useState`) + `onMouseEnter`/`onMouseLeave` with a 150ms `setTimeout` delay before closing
+- Both the nav trigger AND the dropdown panel must call `handleMenuEnter(label)` on enter to keep it open
+- Apply `onMouseLeave` to both nav trigger and dropdown panel to close after the delay
+- This prevents the menu from hiding when the cursor moves from the nav item to the dropdown
+
 ### 8. BUTTON HOVER BEHAVIOR
 - On hover, button colors must NOT change (remove `hover:opacity-90`, `hover:bg-*`, `transition-opacity`, `transition-colors` from buttons)
 - Arrow icons in buttons must NOT translate on hover (remove `group-hover:translate-x-1`)
 - Arrow icons in buttons MUST rotate -30deg on hover using `group-hover:-rotate-30` to tilt slightly upward
-- Add `group` class to the button and `transition-transform duration-200 group-hover:rotate-[30deg]` to the arrow icon
+- Add `group` class to the button and `transition-transform duration-200 group-hover:-rotate-30` to the arrow icon
 
 ### 9. COMMIT CONVENTIONS
 - Format: `type(scope): description`
