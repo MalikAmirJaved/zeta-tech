@@ -134,7 +134,13 @@ All colors MUST come from `globals.css` using semantic tokens. This ensures that
 - For inline text links with arrows (e.g., "Read Article"), add `group` to the link
 - Apply `transition-transform duration-200 group-hover:-rotate-30` to the arrow icon
 
-### 12. COMMIT CONVENTIONS
+### 12. FOOTER SUBSCRIBE BUTTON
+- The footer subscribe button must include an ArrowRight icon
+- Apply button hover behavior rules: no color change on hover, add `group` class
+- Arrow must rotate -30deg on hover using `transition-transform duration-200 group-hover:-rotate-30`
+- Button structure: `group inline-flex items-center gap-2 ...` with ArrowRight as second child
+
+### 13. COMMIT CONVENTIONS
 - Format: `type(scope): description`
 - Types: feat, fix, style, refactor, docs, chore
 - Example: `feat(hero): implement hero section with NOC dashboard`
