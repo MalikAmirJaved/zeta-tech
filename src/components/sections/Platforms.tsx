@@ -44,7 +44,7 @@ export function Platforms() {
           width={650}
           height={645}
           priority
-          className="w-[650px] h-[645px] object-contain opacity-[0.08]"
+          className="w-[650px] h-[645px] object-contain "
         />
       </div>
 
