@@ -73,23 +73,20 @@ const ITEMS: CapabilityItem[] = [
   },
 ];
 
+/* =========================================================
+   CONFIGURATION
+========================================================= */
+
 const DEFAULT_SELECTED = 3;
 const TOTAL = ITEMS.length;
-const CENTER = 3;
 
 /*
- * =========================================================
- * LAYOUT
- * =========================================================
- */
-
-/*
- * Actual empty gap between icon containers.
+ * Actual empty space between circles.
  */
 const ICON_GAP = 80;
 
 /*
- * Largest circle size.
+ * Active circle size.
  */
 const ACTIVE_SIZE = 80;
 
@@ -101,51 +98,50 @@ const ACTIVE_SIZE = 80;
 const SLOT_SPACING = ACTIVE_SIZE + ICON_GAP;
 
 /*
- * Top position.
+ * Top margin.
  */
 const TOP_MARGIN = 30;
 
 /*
- * Depth of the arc.
+ * Curve depth.
  */
 const CURVE_DEPTH = 70;
 
 /*
- * Animation duration.
+ * Duration of ONE slot movement.
+ *
+ * This is intentionally short because if the user clicks
+ * something 3 positions away, we perform 3 quick movements.
  */
-const MOVE_DURATION = 850;
+const STEP_DURATION = 260;
 
 /*
- * Time an item stays hidden while wrapping.
+ * Small delay between individual steps.
+ *
+ * Keep this low so the movement feels like one continuous
+ * carousel rotation.
  */
-const WRAP_HIDE_DURATION = 350;
+const STEP_DELAY = 25;
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
 
 /*
- * Time used to reveal the wrapped item.
- */
-const WRAP_SHOW_DURATION = 350;
-
-
-/*
- * =========================================================
- * HELPERS
- * =========================================================
- */
-
-/*
- * Converts an item index into its relative carousel position.
+ * Return relative position of an item from the center.
  *
  * Example:
  *
  * selected = 3
  *
- * index 0 -> -3
- * index 1 -> -2
- * index 2 -> -1
- * index 3 ->  0
- * index 4 ->  1
- * index 5 ->  2
- * index 6 ->  3
+ * item 0 = -3
+ * item 1 = -2
+ * item 2 = -1
+ * item 3 =  0
+ * item 4 =  1
+ * item 5 =  2
+ * item 6 =  3
  */
 const getRelativePosition = (
   index: number,
@@ -153,9 +149,6 @@ const getRelativePosition = (
 ) => {
   let relative = index - selectedIndex;
 
-  /*
-   * Circular wrapping.
-   */
   if (relative > TOTAL / 2) {
     relative -= TOTAL;
   }
@@ -168,184 +161,341 @@ const getRelativePosition = (
 };
 
 
+/* =========================================================
+   COMPONENT
+========================================================= */
+
 export function Automation() {
-  const [selected, setSelected] = useState(DEFAULT_SELECTED);
+  const [selected, setSelected] = useState(
+    DEFAULT_SELECTED
+  );
 
   /*
-   * Current X positions.
+   * Current slot position for every item.
+   *
+   * Example:
+   *
+   * [-3, -2, -1, 0, 1, 2, 3]
    */
   const positionsRef = useRef<number[]>(
-    ITEMS.map((_, i) => {
-      return (i - DEFAULT_SELECTED) * SLOT_SPACING;
-    })
+    ITEMS.map((_, index) =>
+      getRelativePosition(index, DEFAULT_SELECTED)
+    )
   );
 
   /*
-   * Items that are currently performing the
-   * hidden -> reposition -> visible animation.
+   * Items currently being moved outside the visible area
+   * and repositioned on the opposite side.
    */
-  const [hiddenItems, setHiddenItems] = useState<Set<number>>(
-    new Set()
-  );
+  const [hiddenItems, setHiddenItems] = useState<
+    Set<number>
+  >(new Set());
 
   /*
-   * Force re-render after ref changes.
+   * Prevent multiple clicks while the carousel is
+   * performing the sequential movement.
+   */
+  const isAnimatingRef = useRef(false);
+
+  /*
+   * Force component update after changing refs.
    */
   const [, setTick] = useState(0);
 
+  /*
+   * Current active content.
+   */
   const active = ITEMS[selected];
 
 
-  /*
-   * =========================================================
-   * SELECT ITEM
-   * =========================================================
-   */
+  /* =======================================================
+     CALCULATE ONE STEP
+  ======================================================= */
 
-  const handleSelect = (index: number) => {
-    if (index === selected) return;
-
-    const oldSelected = selected;
+  const moveOneStep = async (
+    direction: 1 | -1
+  ) => {
+    /*
+     * Current slot positions.
+     */
+    const currentPositions =
+      positionsRef.current;
 
     /*
-     * Determine direction.
+     * Items that need to wrap.
      */
-    let steps = index - oldSelected;
+    const nextHiddenItems = new Set<number>();
 
-    if (steps > TOTAL / 2) {
-      steps -= TOTAL;
-    }
 
-    if (steps < -TOTAL / 2) {
-      steps += TOTAL;
-    }
+    /* =====================================================
+       FIND WRAPPING ITEM
+    ===================================================== */
 
-    /*
-     * =======================================================
-     * FIND ITEMS THAT MUST WRAP
-     * =======================================================
-     *
-     * Example:
-     *
-     * Going from:
-     *
-     *       [0 1 2 3 4 5 6]
-     *
-     * to:
-     *
-     *       [6 0 1 2 3 4 5]
-     *
-     * item 6 may need to appear from the opposite side.
-     *
-     * Those items should NOT visibly travel across
-     * the entire carousel.
-     */
-
-    const wrappingItems = new Set<number>();
-
-    ITEMS.forEach((_, i) => {
-      const oldRelative = getRelativePosition(i, oldSelected);
-      const newRelative = getRelativePosition(i, index);
+    currentPositions.forEach((position, index) => {
+      /*
+       * Moving left:
+       *
+       * -3 goes outside left
+       * and comes back at +3.
+       */
+      if (
+        direction === -1 &&
+        position === -3
+      ) {
+        nextHiddenItems.add(index);
+      }
 
       /*
-       * If the item crosses the circular boundary,
-       * treat it as a wrapping item.
+       * Moving right:
+       *
+       * +3 goes outside right
+       * and comes back at -3.
        */
-      const difference = newRelative - oldRelative;
-
-      if (Math.abs(difference) > 3) {
-        wrappingItems.add(i);
+      if (
+        direction === 1 &&
+        position === 3
+      ) {
+        nextHiddenItems.add(index);
       }
     });
 
 
     /*
-     * =======================================================
-     * HIDE WRAPPING ITEMS
-     * =======================================================
+     * Hide wrapping item BEFORE moving.
+     *
+     * This prevents the user from seeing it cross
+     * the entire screen.
      */
-
-    if (wrappingItems.size > 0) {
-      setHiddenItems(wrappingItems);
+    if (nextHiddenItems.size > 0) {
+      setHiddenItems(nextHiddenItems);
     }
 
 
     /*
-     * =======================================================
-     * CALCULATE NEW POSITIONS
-     * =======================================================
+     * Give React one frame to apply opacity: 0.
      */
+    await new Promise<void>((resolve) => {
+      requestAnimationFrame(() => {
+        resolve();
+      });
+    });
 
-    const newPositions = positionsRef.current.map((_, i) => {
-      const relativePosition = getRelativePosition(
-        i,
-        index
+
+    /* =====================================================
+       MOVE EVERY ITEM ONE SLOT
+    ===================================================== */
+
+    const newPositions =
+      currentPositions.map((position) => {
+        let nextPosition =
+          position - direction;
+
+        /*
+         * Wrap around.
+         */
+        if (nextPosition < -3) {
+          nextPosition = 3;
+        }
+
+        if (nextPosition > 3) {
+          nextPosition = -3;
+        }
+
+        return nextPosition;
+      });
+
+
+    /*
+     * Save new positions.
+     */
+    positionsRef.current = newPositions;
+
+    setTick((value) => value + 1);
+
+
+    /*
+     * Wait for the actual slot movement.
+     */
+    await new Promise<void>((resolve) => {
+      window.setTimeout(
+        resolve,
+        STEP_DURATION
       );
-
-      return relativePosition * SLOT_SPACING;
     });
 
 
     /*
-     * =======================================================
-     * UPDATE SELECTED
-     * =======================================================
+     * Now the wrapped item is already at its
+     * destination. Show it again.
      */
+    if (nextHiddenItems.size > 0) {
+      setHiddenItems(new Set());
 
-    setSelected(index);
+      setTick((value) => value + 1);
 
-
-    /*
-     * =======================================================
-     * REPOSITION
-     * =======================================================
-     *
-     * Normal items animate.
-     *
-     * Wrapping items are hidden, so their position can
-     * effectively jump from one side to the other.
-     */
-
-    positionsRef.current = newPositions;
-
-    setTick((t) => t + 1);
-
-
-    /*
-     * =======================================================
-     * SHOW WRAPPED ITEMS
-     * =======================================================
-     *
-     * They remain hidden for a short moment, then appear
-     * at their new destination.
-     */
-
-    if (wrappingItems.size > 0) {
-      setTimeout(() => {
-        setHiddenItems(new Set());
-
-        setTick((t) => t + 1);
-      }, WRAP_HIDE_DURATION + WRAP_SHOW_DURATION);
+      /*
+       * Tiny pause makes the reappearance feel natural
+       * without slowing down the carousel.
+       */
+      await new Promise<void>((resolve) => {
+        window.setTimeout(
+          resolve,
+          STEP_DELAY
+        );
+      });
     }
   };
 
 
+  /* =======================================================
+     HANDLE CLICK
+  ======================================================= */
+
+  const handleSelect = async (
+    index: number
+  ) => {
+    /*
+     * Ignore clicking current item.
+     */
+    if (index === selected) {
+      return;
+    }
+
+    /*
+     * Ignore clicks during animation.
+     *
+     * This prevents two carousel animations from
+     * fighting each other.
+     */
+    if (isAnimatingRef.current) {
+      return;
+    }
+
+    isAnimatingRef.current = true;
+
+
+    /* =====================================================
+       DETERMINE SHORTEST DIRECTION
+    ===================================================== */
+
+    let difference =
+      index - selected;
+
+    /*
+     * Normalize circular distance.
+     */
+    if (difference > TOTAL / 2) {
+      difference -= TOTAL;
+    }
+
+    if (difference < -TOTAL / 2) {
+      difference += TOTAL;
+    }
+
+
+    /*
+     * Positive:
+     *
+     * selected -> next item to the right
+     *
+     * Negative:
+     *
+     * selected -> next item to the left
+     */
+    const direction: 1 | -1 =
+      difference > 0 ? 1 : -1;
+
+
+    /*
+     * Number of individual steps.
+     */
+    const numberOfSteps =
+      Math.abs(difference);
+
+
+    /* =====================================================
+       MOVE ONE SLOT AT A TIME
+    ===================================================== */
+
+    for (
+      let step = 0;
+      step < numberOfSteps;
+      step++
+    ) {
+      /*
+       * Perform exactly ONE carousel movement.
+       */
+      await moveOneStep(direction);
+
+      /*
+       * Update selected center item after every step.
+       *
+       * This makes the active circle move naturally
+       * through the carousel rather than jumping.
+       */
+      setSelected((current) => {
+        let next =
+          current + direction;
+
+        if (next < 0) {
+          next = TOTAL - 1;
+        }
+
+        if (next >= TOTAL) {
+          next = 0;
+        }
+
+        return next;
+      });
+    }
+
+
+    /*
+     * Animation finished.
+     */
+    isAnimatingRef.current = false;
+  };
+
+
+  /* =======================================================
+     RENDER
+  ======================================================= */
+
   return (
-    <section className="relative bg-white py-30 px-6 lg:px-[144px] overflow-hidden">
+    <section
+      className="
+        relative
+        bg-white
+        py-30
+        px-6
+        lg:px-[144px]
+        overflow-hidden
+      "
+    >
+      <div
+        className="
+          max-w-[1440px]
+          mx-auto
+          relative
+        "
+      >
 
-      <div className="max-w-[1440px] mx-auto relative">
+        {/* =================================================
+            ICON ARC SECTION
+        ================================================= */}
 
+        <div
+          className="
+            relative
+            h-[380px]
+            mb-8
+            overflow-hidden
+          "
+        >
 
-        {/* =====================================================
-            ICONS ARC SECTION
-        ====================================================== */}
-
-        <div className="relative h-[380px] mb-8">
-
-
-          {/* ===================================================
+          {/* ===============================================
               BACKGROUND ARC
-          ==================================================== */}
+          =============================================== */}
 
           <img
             src="/images/automationback.png"
@@ -364,9 +514,9 @@ export function Automation() {
           />
 
 
-          {/* ===================================================
+          {/* ===============================================
               ICON PIVOT
-          ==================================================== */}
+          =============================================== */}
 
           <div
             className="
@@ -378,44 +528,47 @@ export function Automation() {
             "
           >
 
+            {ITEMS.map((item, index) => {
+              const position =
+                positionsRef.current[index];
 
-            {/* =================================================
-                ICONS
-            ================================================= */}
 
-            {ITEMS.map((item, i) => {
-
-              const x = positionsRef.current[i];
+              /*
+               * X position.
+               */
+              const x =
+                position * SLOT_SPACING;
 
 
               /*
                * Distance from center.
                */
-              const distanceFromCenter =
-                Math.abs(x) / SLOT_SPACING;
+              const distance =
+                Math.abs(position);
 
 
               /*
-               * Vertical curve.
+               * Normal curved Y position.
                */
               const y =
                 TOP_MARGIN +
-                (distanceFromCenter / CENTER) *
+                (distance / 3) *
                   CURVE_DEPTH;
 
 
               /*
-               * Is this the active center item?
+               * Center item.
                */
               const isCenter =
-                Math.abs(x) < 1;
+                position === 0;
 
 
               /*
-               * Is this item currently wrapping?
+               * Is this item temporarily hidden
+               * because it is wrapping?
                */
               const isHidden =
-                hiddenItems.has(i);
+                hiddenItems.has(index);
 
 
               const Icon = item.icon;
@@ -425,7 +578,9 @@ export function Automation() {
                 <button
                   key={item.key}
                   type="button"
-                  onClick={() => handleSelect(i)}
+                  onClick={() =>
+                    handleSelect(index)
+                  }
                   aria-pressed={isCenter}
                   className="
                     absolute
@@ -436,86 +591,77 @@ export function Automation() {
                     focus:outline-none
                   "
                   style={{
-
-                    /*
-                     * =================================================
-                     * X POSITION
-                     * =================================================
-                     */
-                    left: `${x}px`,
-
-
-                    /*
-                     * =================================================
-                     * Y POSITION
-                     * =================================================
-                     */
-                    top: `${y}px`,
-
-
                     /*
                      * Button width.
                      */
                     width: 88,
 
-
                     /*
-                     * Center button on its X coordinate.
+                     * Center button around its
+                     * calculated X coordinate.
                      */
                     marginLeft: -44,
 
+                    /*
+                     * Position.
+                     */
+                    left: 0,
+                    top: 0,
 
                     /*
-                     * =================================================
-                     * WRAPPING ANIMATION
-                     * =================================================
+                     * X/Y movement.
                      *
-                     * Normal items:
-                     *
-                     * left/top animate smoothly.
-                     *
-                     * Wrapping items:
-                     *
-                     * disappear first.
-                     *
-                     * Then their position changes while invisible.
-                     *
-                     * Then they appear.
+                     * Because every click performs
+                     * one step at a time, this animation
+                     * remains quick and smooth even
+                     * for distant items.
                      */
+                    transform: `
+                      translateX(${x}px)
+                      translateY(${y}px)
+                    `,
 
                     transition: isHidden
-                      ? `
-                          opacity ${WRAP_HIDE_DURATION}ms ease-out
-                        `
+                      ? "none"
                       : `
-                          left ${MOVE_DURATION}ms cubic-bezier(0.33, 1.2, 0.64, 1),
-                          top ${MOVE_DURATION}ms cubic-bezier(0.33, 1.2, 0.64, 1),
-                          opacity ${WRAP_SHOW_DURATION}ms ease-in
+                          transform
+                          ${STEP_DURATION}ms
+                          cubic-bezier(
+                            0.22,
+                            0.75,
+                            0.25,
+                            1
+                          )
                         `,
 
                     /*
-                     * Hide wrapped item.
+                     * Hide only the wrapping item.
+                     *
+                     * It gets repositioned while invisible.
                      */
-                    opacity: isHidden ? 0 : 1,
+                    opacity: isHidden
+                      ? 0
+                      : 1,
 
                     /*
-                     * Keep hidden item from being clickable.
+                     * Don't allow clicking a hidden item.
                      */
                     pointerEvents: isHidden
                       ? "none"
                       : "auto",
 
                     /*
-                     * Keep wrapped item above/below correctly.
+                     * Active item always above others.
                      */
-                    zIndex: isCenter ? 20 : 10,
+                    zIndex: isCenter
+                      ? 20
+                      : 10,
                   }}
                 >
 
-
-                  {/* ============================================
+                  {/* ========================================
                       ICON CIRCLE
-                  ============================================= */}
+                  ======================================== */}
 
                   <div
                     className={`
@@ -525,8 +671,9 @@ export function Automation() {
                       items-center
                       justify-center
                       transition-all
-                      duration-500
+                      duration-300
                       ease-out
+
                       ${
                         isCenter
                           ? `
@@ -547,13 +694,13 @@ export function Automation() {
                       }
                     `}
                   >
-
                     <Icon
                       strokeWidth={1}
                       className={`
                         transition-all
-                        duration-500
+                        duration-300
                         ease-out
+
                         ${
                           isCenter
                             ? `
@@ -569,13 +716,12 @@ export function Automation() {
                         }
                       `}
                     />
-
                   </div>
 
 
-                  {/* ============================================
+                  {/* ========================================
                       LABEL
-                  ============================================= */}
+                  ======================================== */}
 
                   <span
                     className={`
@@ -585,8 +731,9 @@ export function Automation() {
                       text-center
                       whitespace-nowrap
                       transition-all
-                      duration-500
+                      duration-300
                       ease-out
+
                       ${
                         isCenter
                           ? `
@@ -611,16 +758,21 @@ export function Automation() {
         </div>
 
 
-        {/* =====================================================
+        {/* =================================================
             CONTENT SECTION
-        ====================================================== */}
+        ================================================= */}
 
-        <div className="relative bottom-40 text-center">
+        <div
+          className="
+            relative
+            bottom-40
+            text-center
+          "
+        >
 
-
-          {/* ===================================================
+          {/* ===============================================
               BADGE
-          ==================================================== */}
+          =============================================== */}
 
           <div
             className="
@@ -636,7 +788,6 @@ export function Automation() {
               mb-5
             "
           >
-
             <span
               className="
                 w-1.5
@@ -658,13 +809,12 @@ export function Automation() {
             >
               OUR CAPABILITIES
             </span>
-
           </div>
 
 
-          {/* ===================================================
+          {/* ===============================================
               HEADING
-          ==================================================== */}
+          =============================================== */}
 
           <h2
             className="
@@ -683,9 +833,9 @@ export function Automation() {
           </h2>
 
 
-          {/* ===================================================
+          {/* ===============================================
               DESCRIPTION
-          ==================================================== */}
+          =============================================== */}
 
           <p
             className="
@@ -705,9 +855,9 @@ export function Automation() {
           </p>
 
 
-          {/* ===================================================
+          {/* ===============================================
               BUTTON
-          ==================================================== */}
+          =============================================== */}
 
           <a
             href="#services"
@@ -738,13 +888,10 @@ export function Automation() {
                 group-hover:-rotate-30
               "
             />
-
           </a>
 
         </div>
-
       </div>
-
     </section>
   );
 }
