@@ -37,14 +37,14 @@ export function Platforms() {
       className="relative bg-secondary py-[120px] px-6 lg:px-[144px] overflow-hidden"
     >
       {/* Background Logo */}
-      <div className="absolute right-[-150px] top-28 w-[650px] h-[645px] pointer-events-none z-0">
+      <div className="absolute right-[-150px] top-28 w-[680px] h-[700px] pointer-events-none z-0">
         <Image
           src="/biglogo.png"
           alt=""
-          width={650}
-          height={645}
+          width={680}
+          height={700}
           priority
-          className="w-[650px] h-[645px] object-contain "
+          className="w-[650px] h-[700px] object-contain "
         />
       </div>
 
