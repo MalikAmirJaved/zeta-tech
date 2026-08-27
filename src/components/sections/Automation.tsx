@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import {
   ArrowRight,
   Wifi,
@@ -73,28 +73,60 @@ const ITEMS: CapabilityItem[] = [
   },
 ];
 
-// Index of "Intelligent Automation" in ITEMS — also the default selection
-// and the middle slot of the arc.
 const DEFAULT_SELECTED = 3;
 const TOTAL = ITEMS.length;
+const CENTER = 3;
 
-// 7 evenly spaced slot positions across the arc (left %), all fully
-// visible, with a smooth, evenly-stepped bow (top px). Slot 3 is always
-// the center slot.
-const SLOT_POSITIONS = [
-  { left: 2, top: 90 },
-  { left: 18, top: 60 },
-  { left: 34, top: 30 },
-  { left: 50, top: 0 },
-  { left: 66, top: 30 },
-  { left: 82, top: 60 },
-  { left: 98, top: 90 },
-];
-const CENTER_SLOT = 3;
+// Very shallow angles → matches the original gentle arc (only ~90px drop)
+const SLOT_ANGLES = [-62, -41, -20, 0, 20, 41, 62];
+
+// Large radius = flatter curve
+const RADIUS = 980;
+const PIVOT_Y = 1000; // keeps the whole group high in the container
 
 export function Automation() {
   const [selected, setSelected] = useState(DEFAULT_SELECTED);
+
+  const anglesRef = useRef<number[]>(
+    ITEMS.map((_, i) => {
+      const slot = (i - DEFAULT_SELECTED + CENTER + TOTAL) % TOTAL;
+      return SLOT_ANGLES[slot];
+    })
+  );
+
+  const [, setTick] = useState(0);
   const active = ITEMS[selected];
+
+  const handleSelect = (index: number) => {
+    if (index === selected) return;
+
+    let steps = index - selected;
+    if (steps > TOTAL / 2) steps -= TOTAL;
+    if (steps < -TOTAL / 2) steps += TOTAL;
+
+    const newAngles = anglesRef.current.map((currentAngle, i) => {
+      const targetSlot = (i - index + CENTER + TOTAL * 10) % TOTAL;
+      const targetAngle = SLOT_ANGLES[targetSlot];
+
+      let delta = targetAngle - currentAngle;
+
+      if (steps !== 0 && Math.abs(delta) > 1) {
+        const desiredSign = Math.sign(steps);
+        while (delta > 180) delta -= 360;
+        while (delta < -180) delta += 360;
+
+        if (Math.sign(delta) !== desiredSign && Math.sign(delta) !== 0) {
+          delta -= desiredSign * 360;
+        }
+      }
+
+      return currentAngle + delta;
+    });
+
+    anglesRef.current = newAngles;
+    setSelected(index);
+    setTick((t) => t + 1);
+  };
 
   return (
     <section className="relative bg-white py-30 px-6 lg:px-[144px] overflow-hidden">
@@ -108,29 +140,46 @@ export function Automation() {
             className="absolute left-1/2 -translate-x-1/2 top-0 w-[1400px] max-w-none h-auto pointer-events-none select-none"
           />
 
-          {/* Icons Container */}
-          <div className="relative flex items-start justify-center h-full">
+          {/* Pivot */}
+          <div
+            className="absolute left-1/2 top-0 w-0 h-0"
+            style={{
+              transform: `translateX(-50%) translateY(${PIVOT_Y}px)`,
+            }}
+          >
             {ITEMS.map((item, i) => {
-              const slotIndex = (i - selected + CENTER_SLOT + TOTAL) % TOTAL;
-              const pos = SLOT_POSITIONS[slotIndex];
-              const isCenter = slotIndex === CENTER_SLOT;
+              const angle = anglesRef.current[i];
+
+              let norm = ((angle % 360) + 360) % 360;
+              if (norm > 180) norm -= 360;
+              const isCenter = Math.abs(norm) < 12;
+
               const Icon = item.icon;
 
               return (
                 <button
                   key={item.key}
                   type="button"
-                  onClick={() => setSelected(i)}
+                  onClick={() => handleSelect(i)}
                   aria-pressed={isCenter}
-                  className="absolute flex flex-col items-center cursor-pointer transition-all duration-700 ease-in-out focus:outline-none"
+                  className="absolute flex flex-col items-center cursor-pointer focus:outline-none"
                   style={{
-                    left: `${pos.left}%`,
-                    top: `${pos.top}px`,
-                    transform: "translateX(-50%)",
+                    transform: `
+                      rotate(${angle}deg)
+                      translateY(-${RADIUS}px)
+                      rotate(${-angle}deg)
+                    `,
+                    transition:
+                      "transform 0.85s cubic-bezier(0.33, 1.2, 0.64, 1)",
+                    left: 0,
+                    top: 0,
+                    width: 88,
+                    marginLeft: -44,
+                    marginTop: -44,
                   }}
                 >
                   <div
-                    className={`rounded-full border flex items-center justify-center transition-all duration-700 ease-in-out ${
+                    className={`rounded-full border flex items-center justify-center transition-all duration-500 ease-out ${
                       isCenter
                         ? "w-20 h-20 bg-red-600 border-red-600 shadow-lg"
                         : "w-[72px] h-[72px] bg-white border-red-100 shadow-sm hover:border-red-300"
@@ -138,14 +187,18 @@ export function Automation() {
                   >
                     <Icon
                       strokeWidth={1}
-                      className={`transition-all duration-700 ease-in-out ${
-                        isCenter ? "w-10 h-10 text-white" : "w-9 h-9 text-red-600"
+                      className={`transition-all duration-500 ease-out ${
+                        isCenter
+                          ? "w-10 h-10 text-white"
+                          : "w-9 h-9 text-red-600"
                       }`}
                     />
                   </div>
                   <span
-                    className={`mt-3 font-sans font-semibold text-center transition-all duration-700 ease-in-out ${
-                      isCenter ? "text-sm text-red-600" : "text-xs text-neutral-900"
+                    className={`mt-3 font-sans font-semibold text-center whitespace-nowrap transition-all duration-500 ease-out ${
+                      isCenter
+                        ? "text-sm text-red-600"
+                        : "text-xs text-neutral-900"
                     }`}
                   >
                     {item.label}
@@ -157,8 +210,7 @@ export function Automation() {
         </div>
 
         {/* Content Section */}
-        <div className="relative bottom-40 text-center ">
-          {/* Tagline Pill */}
+        <div className="relative bottom-40 text-center">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-red-100 bg-red-50 mb-5">
             <span className="w-1.5 h-1.5 rounded-full bg-red-600" />
             <span className="text-red-600 font-heading font-semibold text-[11px] tracking-[3px] uppercase">
@@ -166,17 +218,14 @@ export function Automation() {
             </span>
           </div>
 
-          {/* Heading */}
           <h2 className="font-heading font-bold text-[44px] leading-[57px] text-center text-neutral-900 mb-5 transition-all duration-300">
             {active.header}
           </h2>
 
-          {/* Subheading */}
           <p className="font-sans text-base leading-[21px] text-center text-neutral-500 max-w-[600px] mx-auto mb-8 transition-all duration-300">
             {active.des}
           </p>
 
-          {/* CTA Button */}
           <a
             href="#services"
             className="group inline-flex items-center gap-2 bg-red-600 text-white font-heading font-semibold text-[15px] leading-5 px-7 py-4 rounded-[10px]"
