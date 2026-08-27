@@ -85,7 +85,7 @@ export function Platforms() {
           {platforms.map((platform) => (
             <div
               key={platform.title}
-              className="bg-white border border-border rounded-2xl p-8 flex flex-col gap-4"
+              className="group bg-white border border-border rounded-2xl p-8 flex flex-col gap-4 hover:border-primary transition-colors"
             >
               {/* Status Indicator */}
               <StatusIndicator />
@@ -103,10 +103,10 @@ export function Platforms() {
               {/* Footer Link - mt-auto pushes this to bottom */}
               <a
                 href="#"
-                className="mt-auto inline-flex items-center gap-2 text-primary font-heading font-bold text-sm leading-[18px] hover:underline"
+                className="mt-auto group inline-flex items-center gap-2 text-primary font-heading font-bold text-sm leading-[18px] hover:underline"
               >
                 Explore
-                <ArrowRight className="w-3 h-3" />
+                <ArrowRight strokeWidth={4} className="w-3 h-3 transition-transform duration-200 group-hover:-rotate-30" />
               </a>
             </div>
           ))}
