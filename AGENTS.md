@@ -140,7 +140,12 @@ All colors MUST come from `globals.css` using semantic tokens. This ensures that
 - Arrow must rotate -30deg on hover using `transition-transform duration-200 group-hover:-rotate-30`
 - Button structure: `group inline-flex items-center gap-2 ...` with ArrowRight as second child
 
-### 13. COMMIT CONVENTIONS
+### 14. IMAGE HOVER ZOOM BEHAVIOR
+- For background images inside cards/sections, add `group` to the parent container
+- Apply `transition-transform duration-700 ease-out group-hover:scale-110` to the Image component
+- Ensure the parent has `overflow-hidden` so the zoomed image doesn't spill outside
+
+### 15. COMMIT CONVENTIONS
 - Format: `type(scope): description`
 - Types: feat, fix, style, refactor, docs, chore
 - Example: `feat(hero): implement hero section with NOC dashboard`

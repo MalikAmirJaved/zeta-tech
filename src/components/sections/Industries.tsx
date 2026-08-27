@@ -63,14 +63,14 @@ export function Industries() {
           {caseStudies.map((study) => (
             <div
               key={study.company}
-              className="relative rounded-2xl overflow-hidden h-[262px]"
+              className="group relative rounded-2xl overflow-hidden h-[262px]"
             >
               {/* Background Image */}
               <Image
                 src={study.image}
                 alt={study.company}
                 fill
-                className="object-cover"
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-150"
               />
 
               {/* Gradient Overlay */}
