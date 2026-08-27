@@ -119,7 +119,12 @@ All colors MUST come from `globals.css` using semantic tokens. This ensures that
 - Arrow icons in buttons MUST rotate -30deg on hover using `group-hover:-rotate-30` to tilt slightly upward
 - Add `group` class to the button and `transition-transform duration-200 group-hover:-rotate-30` to the arrow icon
 
-### 9. COMMIT CONVENTIONS
+### 9. CARD HOVER BEHAVIOR
+- For card hover effects, add `group` to the card container
+- On hover, border must change to `border-primary` using `group-hover:border-primary` with `transition-colors`
+- For internal arrow/link icons inside cards, apply `transition-transform duration-200 group-hover:-rotate-30` to tilt slightly upward on hover
+
+### 10. COMMIT CONVENTIONS
 - Format: `type(scope): description`
 - Types: feat, fix, style, refactor, docs, chore
 - Example: `feat(hero): implement hero section with NOC dashboard`
