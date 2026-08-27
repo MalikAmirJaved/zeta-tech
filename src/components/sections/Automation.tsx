@@ -77,53 +77,130 @@ const DEFAULT_SELECTED = 3;
 const TOTAL = ITEMS.length;
 const CENTER = 3;
 
-// Very shallow angles → matches the original gentle arc (only ~90px drop)
-const SLOT_ANGLES = [-62, -41, -20, 0, 20, 41, 62];
+/*
+ * ============================================
+ * LAYOUT SETTINGS
+ * ============================================
+ */
 
-// Large radius = flatter curve
-const RADIUS = 980;
-const PIVOT_Y = 1000; // keeps the whole group high in the container
+/*
+ * Actual empty space between icon circles.
+ *
+ * Example:
+ *
+ *   (72px)       80px       (72px)
+ *  ┌──────┐                 ┌──────┐
+ *  │ ICON │                 │ ICON │
+ *  └──────┘                 └──────┘
+ *           ← 80px →
+ */
+const ICON_GAP = 80;
+
+/*
+ * Top position of the icon circles.
+ */
+const TOP_MARGIN = 30;
+
+/*
+ * How much the outside icons drop compared
+ * with the center icon.
+ *
+ * 0  = completely straight
+ * 40 = very shallow curve
+ * 70 = current curve
+ * 100 = deeper curve
+ */
+const CURVE_DEPTH = 70;
+
+/*
+ * Circle sizes.
+ */
+const ACTIVE_SIZE = 80;
+const INACTIVE_SIZE = 72;
+
+/*
+ * Since the active circle is 80px and inactive
+ * circles are 72px, we use the largest size
+ * when calculating slot spacing.
+ *
+ * 80px circle + 80px gap = 160px
+ */
+const SLOT_SPACING = ACTIVE_SIZE + ICON_GAP;
 
 export function Automation() {
   const [selected, setSelected] = useState(DEFAULT_SELECTED);
 
-  const anglesRef = useRef<number[]>(
+  /*
+   * X positions of each item.
+   *
+   * Initially:
+   *
+   * item 0 = -480
+   * item 1 = -320
+   * item 2 = -160
+   * item 3 =    0
+   * item 4 =  160
+   * item 5 =  320
+   * item 6 =  480
+   *
+   * This gives 80px actual space between
+   * the 80px slot containers.
+   */
+  const positionsRef = useRef<number[]>(
     ITEMS.map((_, i) => {
-      const slot = (i - DEFAULT_SELECTED + CENTER + TOTAL) % TOTAL;
-      return SLOT_ANGLES[slot];
+      return (i - DEFAULT_SELECTED) * SLOT_SPACING;
     })
   );
 
+  /*
+   * Force re-render after changing positionsRef.
+   */
   const [, setTick] = useState(0);
+
   const active = ITEMS[selected];
 
   const handleSelect = (index: number) => {
     if (index === selected) return;
 
     let steps = index - selected;
-    if (steps > TOTAL / 2) steps -= TOTAL;
-    if (steps < -TOTAL / 2) steps += TOTAL;
 
-    const newAngles = anglesRef.current.map((currentAngle, i) => {
-      const targetSlot = (i - index + CENTER + TOTAL * 10) % TOTAL;
-      const targetAngle = SLOT_ANGLES[targetSlot];
+    /*
+     * Always use the shortest direction.
+     *
+     * Example:
+     * Going from item 0 to item 6 should move
+     * one step backwards instead of six steps forward.
+     */
+    if (steps > TOTAL / 2) {
+      steps -= TOTAL;
+    }
 
-      let delta = targetAngle - currentAngle;
+    if (steps < -TOTAL / 2) {
+      steps += TOTAL;
+    }
 
-      if (steps !== 0 && Math.abs(delta) > 1) {
-        const desiredSign = Math.sign(steps);
-        while (delta > 180) delta -= 360;
-        while (delta < -180) delta += 360;
+    /*
+     * Calculate new X position for every item.
+     */
+    const newPositions = positionsRef.current.map((_, i) => {
+      let relativePosition = i - index;
 
-        if (Math.sign(delta) !== desiredSign && Math.sign(delta) !== 0) {
-          delta -= desiredSign * 360;
-        }
+      /*
+       * Circular wrapping.
+       */
+      if (relativePosition > TOTAL / 2) {
+        relativePosition -= TOTAL;
       }
 
-      return currentAngle + delta;
+      if (relativePosition < -TOTAL / 2) {
+        relativePosition += TOTAL;
+      }
+
+      return relativePosition * SLOT_SPACING;
     });
 
-    anglesRef.current = newAngles;
+    positionsRef.current = newPositions;
+
     setSelected(index);
     setTick((t) => t + 1);
   };
@@ -131,8 +208,13 @@ export function Automation() {
   return (
     <section className="relative bg-white py-30 px-6 lg:px-[144px] overflow-hidden">
       <div className="max-w-[1440px] mx-auto relative">
-        {/* Icons Arc Section */}
+
+        {/* ============================================
+            ICONS ARC SECTION
+        ============================================ */}
+
         <div className="relative h-[380px] mb-8">
+
           {/* Background Arc Image */}
           <img
             src="/images/automationback.png"
@@ -140,19 +222,53 @@ export function Automation() {
             className="absolute left-1/2 -translate-x-1/2 top-0 w-[1400px] max-w-none h-auto pointer-events-none select-none"
           />
 
-          {/* Pivot */}
+          {/* ============================================
+              ICON PIVOT
+          ============================================ */}
+
           <div
             className="absolute left-1/2 top-0 w-0 h-0"
             style={{
-              transform: `translateX(-50%) translateY(${PIVOT_Y}px)`,
+              transform: `translateX(-50%)`,
             }}
           >
             {ITEMS.map((item, i) => {
-              const angle = anglesRef.current[i];
+              const x = positionsRef.current[i];
 
-              let norm = ((angle % 360) + 360) % 360;
-              if (norm > 180) norm -= 360;
-              const isCenter = Math.abs(norm) < 12;
+              /*
+               * Distance from center.
+               *
+               * Center:
+               * 0
+               *
+               * One position away:
+               * 1
+               *
+               * Two positions away:
+               * 2
+               *
+               * etc.
+               */
+              const distanceFromCenter =
+                Math.abs(x) / SLOT_SPACING;
+
+              /*
+               * Create the gentle arc.
+               *
+               * Center:
+               * 30px from top
+               *
+               * Outer items:
+               * progressively lower.
+               */
+              const y =
+                TOP_MARGIN +
+                (distanceFromCenter / CENTER) * CURVE_DEPTH;
+
+              /*
+               * The item at X = 0 is the active item.
+               */
+              const isCenter = Math.abs(x) < 1;
 
               const Icon = item.icon;
 
@@ -164,20 +280,37 @@ export function Automation() {
                   aria-pressed={isCenter}
                   className="absolute flex flex-col items-center cursor-pointer focus:outline-none"
                   style={{
-                    transform: `
-                      rotate(${angle}deg)
-                      translateY(-${RADIUS}px)
-                      rotate(${-angle}deg)
-                    `,
-                    transition:
-                      "transform 0.85s cubic-bezier(0.33, 1.2, 0.64, 1)",
-                    left: 0,
-                    top: 0,
+                    /*
+                     * Horizontal position.
+                     */
+                    left: `${x}px`,
+
+                    /*
+                     * Vertical position.
+                     */
+                    top: `${y}px`,
+
+                    /*
+                     * The button itself is 88px wide.
+                     */
                     width: 88,
+
+                    /*
+                     * Center the button around its X position.
+                     */
                     marginLeft: -44,
-                    marginTop: -44,
+
+                    /*
+                     * Smooth animation.
+                     */
+                    transition:
+                      "left 0.85s cubic-bezier(0.33, 1.2, 0.64, 1), top 0.85s cubic-bezier(0.33, 1.2, 0.64, 1)",
                   }}
                 >
+                  {/* ============================================
+                      ICON CIRCLE
+                  ============================================ */}
+
                   <div
                     className={`rounded-full border flex items-center justify-center transition-all duration-500 ease-out ${
                       isCenter
@@ -194,6 +327,11 @@ export function Automation() {
                       }`}
                     />
                   </div>
+
+                  {/* ============================================
+                      LABEL
+                  ============================================ */}
+
                   <span
                     className={`mt-3 font-sans font-semibold text-center whitespace-nowrap transition-all duration-500 ease-out ${
                       isCenter
@@ -209,28 +347,38 @@ export function Automation() {
           </div>
         </div>
 
-        {/* Content Section */}
+        {/* ============================================
+            CONTENT SECTION
+        ============================================ */}
+
         <div className="relative bottom-40 text-center">
+
+          {/* Badge */}
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-red-100 bg-red-50 mb-5">
             <span className="w-1.5 h-1.5 rounded-full bg-red-600" />
+
             <span className="text-red-600 font-heading font-semibold text-[11px] tracking-[3px] uppercase">
               OUR CAPABILITIES
             </span>
           </div>
 
+          {/* Heading */}
           <h2 className="font-heading font-bold text-[44px] leading-[57px] text-center text-neutral-900 mb-5 transition-all duration-300">
             {active.header}
           </h2>
 
+          {/* Description */}
           <p className="font-sans text-base leading-[21px] text-center text-neutral-500 max-w-[600px] mx-auto mb-8 transition-all duration-300">
             {active.des}
           </p>
 
+          {/* Button */}
           <a
             href="#services"
             className="group inline-flex items-center gap-2 bg-red-600 text-white font-heading font-semibold text-[15px] leading-5 px-7 py-4 rounded-[10px]"
           >
             View All Services
+
             <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:-rotate-30" />
           </a>
         </div>
