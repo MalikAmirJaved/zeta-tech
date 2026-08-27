@@ -10,7 +10,7 @@ const caseStudies = [
     statLabel: "Cost reduction achieved",
     description:
       "By migrating their core transaction registry layers into Zeta's virtualization cluster architecture, securing critical data trails.",
-    image: "/images/provenresults/c828f00d4255d82399b45ec1644428d97d4c71ad.png",
+    image: "/images/provenresults/be07f621ae4c8dac4e4749a8813c5cb76e82f61c.png",
   },
   {
     company: "Systems Ltd",
@@ -26,7 +26,7 @@ const caseStudies = [
     statLabel: "Secure daily transactions",
     description:
       "Handling robust financial workloads and high-throughput databases securely with dedicated hardware machine intelligence modules.",
-    image: "/images/provenresults/be07f621ae4c8dac4e4749a8813c5cb76e82f61c.png",
+    image: "/images/provenresults/c828f00d4255d82399b45ec1644428d97d4c71ad.png",
   },
 ];
 
