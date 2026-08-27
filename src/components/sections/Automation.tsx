@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   ArrowRight,
   Wifi,
@@ -108,20 +108,9 @@ const TOP_MARGIN = 30;
 const CURVE_DEPTH = 70;
 
 /*
- * Duration of ONE slot movement.
- *
- * This is intentionally short because if the user clicks
- * something 3 positions away, we perform 3 quick movements.
+ * Duration of the slide animation, in ms.
  */
-const STEP_DURATION = 260;
-
-/*
- * Small delay between individual steps.
- *
- * Keep this low so the movement feels like one continuous
- * carousel rotation.
- */
-const STEP_DELAY = 25;
+const TRANSITION_DURATION = 450;
 
 
 /* =========================================================
@@ -161,6 +150,43 @@ const getRelativePosition = (
 };
 
 
+/*
+ * Easing curve for the slide animation.
+ */
+const easeOutCubic = (t: number) =>
+  1 - Math.pow(1 - t, 3);
+
+/*
+ * Y position for a given (possibly fractional) slot
+ * position, following the arc.
+ *
+ * This is the SAME formula used at rest — calling it
+ * every animation frame (instead of only at the start
+ * and end) is what makes a node crossing the center
+ * dip through the curve instead of cutting a straight
+ * line across it.
+ */
+const getCurveY = (position: number) => {
+  const distance = Math.abs(position);
+  return (
+    TOP_MARGIN +
+    (distance / 3) * CURVE_DEPTH
+  );
+};
+
+
+/*
+ * Duration the outgoing text fades/slides out for
+ * before the incoming text is swapped in.
+ */
+const CONTENT_EXIT_DURATION = 180;
+
+/*
+ * Duration the incoming text takes to fade/slide in.
+ */
+const CONTENT_ENTER_DURATION = 220;
+
+
 /* =========================================================
    COMPONENT
 ========================================================= */
@@ -171,289 +197,157 @@ export function Automation() {
   );
 
   /*
-   * Current slot position for every item.
-   *
-   * Example:
-   *
-   * [-3, -2, -1, 0, 1, 2, 3]
+   * The content (heading/description) can lag behind
+   * `selected` by a beat so it can play an exit
+   * animation before the new text swaps in.
    */
-  const positionsRef = useRef<number[]>(
+  const [displayIndex, setDisplayIndex] = useState(
+    DEFAULT_SELECTED
+  );
+
+  const [contentPhase, setContentPhase] = useState<
+    "idle" | "exiting" | "entering"
+  >("idle");
+
+  const contentTimersRef = useRef<
+    ReturnType<typeof setTimeout>[]
+  >([]);
+
+  /*
+   * Current active content.
+   */
+  const active = ITEMS[displayIndex];
+
+  /*
+   * Live, per-node slot position (fractional while
+   * animating). This is what actually gets rendered.
+   */
+  const livePositionsRef = useRef<number[]>(
     ITEMS.map((_, index) =>
       getRelativePosition(index, DEFAULT_SELECTED)
     )
   );
 
   /*
-   * Items currently being moved outside the visible area
-   * and repositioned on the opposite side.
+   * Positions the current animation started from / is
+   * heading to, captured once per click.
    */
-  const [hiddenItems, setHiddenItems] = useState<
-    Set<number>
-  >(new Set());
+  const animFromRef = useRef<number[]>([
+    ...livePositionsRef.current,
+  ]);
+  const animToRef = useRef<number[]>([
+    ...livePositionsRef.current,
+  ]);
+
+  const animStartRef = useRef(0);
+  const rafRef = useRef<number | null>(null);
 
   /*
-   * Prevent multiple clicks while the carousel is
-   * performing the sequential movement.
+   * Force a re-render on every animation frame.
    */
-  const isAnimatingRef = useRef(false);
+  const [, forceRender] = useState(0);
 
   /*
-   * Force component update after changing refs.
+   * Stop any in-flight animation / timers on unmount.
    */
-  const [, setTick] = useState(0);
-
-  /*
-   * Current active content.
-   */
-  const active = ITEMS[selected];
-
-
-  /* =======================================================
-     CALCULATE ONE STEP
-  ======================================================= */
-
-  const moveOneStep = async (
-    direction: 1 | -1
-  ) => {
-    /*
-     * Current slot positions.
-     */
-    const currentPositions =
-      positionsRef.current;
-
-    /*
-     * Items that need to wrap.
-     */
-    const nextHiddenItems = new Set<number>();
-
-
-    /* =====================================================
-       FIND WRAPPING ITEM
-    ===================================================== */
-
-    currentPositions.forEach((position, index) => {
-      /*
-       * Moving left:
-       *
-       * -3 goes outside left
-       * and comes back at +3.
-       */
-      if (
-        direction === -1 &&
-        position === -3
-      ) {
-        nextHiddenItems.add(index);
+  useEffect(() => {
+    return () => {
+      if (rafRef.current !== null) {
+        cancelAnimationFrame(rafRef.current);
       }
 
-      /*
-       * Moving right:
-       *
-       * +3 goes outside right
-       * and comes back at -3.
-       */
-      if (
-        direction === 1 &&
-        position === 3
-      ) {
-        nextHiddenItems.add(index);
-      }
-    });
-
-
-    /*
-     * Hide wrapping item BEFORE moving.
-     *
-     * This prevents the user from seeing it cross
-     * the entire screen.
-     */
-    if (nextHiddenItems.size > 0) {
-      setHiddenItems(nextHiddenItems);
-    }
-
-
-    /*
-     * Give React one frame to apply opacity: 0.
-     */
-    await new Promise<void>((resolve) => {
-      requestAnimationFrame(() => {
-        resolve();
-      });
-    });
-
-
-    /* =====================================================
-       MOVE EVERY ITEM ONE SLOT
-    ===================================================== */
-
-    const newPositions =
-      currentPositions.map((position) => {
-        let nextPosition =
-          position - direction;
-
-        /*
-         * Wrap around.
-         */
-        if (nextPosition < -3) {
-          nextPosition = 3;
-        }
-
-        if (nextPosition > 3) {
-          nextPosition = -3;
-        }
-
-        return nextPosition;
-      });
-
-
-    /*
-     * Save new positions.
-     */
-    positionsRef.current = newPositions;
-
-    setTick((value) => value + 1);
-
-
-    /*
-     * Wait for the actual slot movement.
-     */
-    await new Promise<void>((resolve) => {
-      window.setTimeout(
-        resolve,
-        STEP_DURATION
-      );
-    });
-
-
-    /*
-     * Now the wrapped item is already at its
-     * destination. Show it again.
-     */
-    if (nextHiddenItems.size > 0) {
-      setHiddenItems(new Set());
-
-      setTick((value) => value + 1);
-
-      /*
-       * Tiny pause makes the reappearance feel natural
-       * without slowing down the carousel.
-       */
-      await new Promise<void>((resolve) => {
-        window.setTimeout(
-          resolve,
-          STEP_DELAY
-        );
-      });
-    }
-  };
+      contentTimersRef.current.forEach(clearTimeout);
+    };
+  }, []);
 
 
   /* =======================================================
      HANDLE CLICK
   ======================================================= */
 
-  const handleSelect = async (
-    index: number
-  ) => {
-    /*
-     * Ignore clicking current item.
-     */
+  const handleSelect = (index: number) => {
     if (index === selected) {
       return;
     }
 
-    /*
-     * Ignore clicks during animation.
-     *
-     * This prevents two carousel animations from
-     * fighting each other.
-     */
-    if (isAnimatingRef.current) {
-      return;
-    }
-
-    isAnimatingRef.current = true;
+    setSelected(index);
 
 
     /* =====================================================
-       DETERMINE SHORTEST DIRECTION
+       NODE POSITION ANIMATION
     ===================================================== */
 
-    let difference =
-      index - selected;
-
     /*
-     * Normalize circular distance.
+     * Each node's own target slot is still the shortest
+     * circular distance from the newly selected node.
      */
-    if (difference > TOTAL / 2) {
-      difference -= TOTAL;
+    animFromRef.current = [...livePositionsRef.current];
+    animToRef.current = ITEMS.map((_, itemIndex) =>
+      getRelativePosition(itemIndex, index)
+    );
+    animStartRef.current = performance.now();
+
+    if (rafRef.current !== null) {
+      cancelAnimationFrame(rafRef.current);
     }
 
-    if (difference < -TOTAL / 2) {
-      difference += TOTAL;
-    }
+    const step = (now: number) => {
+      const elapsed =
+        now - animStartRef.current;
 
+      const t = Math.min(
+        elapsed / TRANSITION_DURATION,
+        1
+      );
 
-    /*
-     * Positive:
-     *
-     * selected -> next item to the right
-     *
-     * Negative:
-     *
-     * selected -> next item to the left
-     */
-    const direction: 1 | -1 =
-      difference > 0 ? 1 : -1;
+      const eased = easeOutCubic(t);
 
+      /*
+       * Interpolate each node's slot position, not its
+       * x/y directly — y is derived from this position
+       * every frame via getCurveY(), so the motion always
+       * sits on the real arc.
+       */
+      livePositionsRef.current = animFromRef.current.map(
+        (from, itemIndex) => {
+          const to = animToRef.current[itemIndex];
+          return from + (to - from) * eased;
+        }
+      );
 
-    /*
-     * Number of individual steps.
-     */
-    const numberOfSteps =
-      Math.abs(difference);
+      forceRender((value) => value + 1);
+
+      if (t < 1) {
+        rafRef.current = requestAnimationFrame(step);
+      } else {
+        rafRef.current = null;
+      }
+    };
+
+    rafRef.current = requestAnimationFrame(step);
 
 
     /* =====================================================
-       MOVE ONE SLOT AT A TIME
+       CONTENT FADE/SLIDE TRANSITION
     ===================================================== */
 
-    for (
-      let step = 0;
-      step < numberOfSteps;
-      step++
-    ) {
-      /*
-       * Perform exactly ONE carousel movement.
-       */
-      await moveOneStep(direction);
+    contentTimersRef.current.forEach(clearTimeout);
+    contentTimersRef.current = [];
 
-      /*
-       * Update selected center item after every step.
-       *
-       * This makes the active circle move naturally
-       * through the carousel rather than jumping.
-       */
-      setSelected((current) => {
-        let next =
-          current + direction;
+    setContentPhase("exiting");
 
-        if (next < 0) {
-          next = TOTAL - 1;
-        }
+    contentTimersRef.current.push(
+      setTimeout(() => {
+        setDisplayIndex(index);
+        setContentPhase("entering");
+      }, CONTENT_EXIT_DURATION)
+    );
 
-        if (next >= TOTAL) {
-          next = 0;
-        }
-
-        return next;
-      });
-    }
-
-
-    /*
-     * Animation finished.
-     */
-    isAnimatingRef.current = false;
+    contentTimersRef.current.push(
+      setTimeout(() => {
+        setContentPhase("idle");
+      }, CONTENT_EXIT_DURATION + CONTENT_ENTER_DURATION)
+    );
   };
 
 
@@ -529,8 +423,12 @@ export function Automation() {
           >
 
             {ITEMS.map((item, index) => {
+              /*
+               * Live (possibly mid-animation) slot
+               * position for this node.
+               */
               const position =
-                positionsRef.current[index];
+                livePositionsRef.current[index];
 
 
               /*
@@ -541,34 +439,24 @@ export function Automation() {
 
 
               /*
-               * Distance from center.
-               */
-              const distance =
-                Math.abs(position);
-
-
-              /*
-               * Normal curved Y position.
+               * Y position — recomputed from the curve
+               * every frame, so nodes crossing the center
+               * dip through the arc instead of cutting a
+               * straight line across it.
                */
               const y =
-                TOP_MARGIN +
-                (distance / 3) *
-                  CURVE_DEPTH;
+                getCurveY(position);
 
 
               /*
                * Center item.
+               *
+               * Based on `selected`, not the live position,
+               * since the live position is fractional while
+               * animating.
                */
               const isCenter =
-                position === 0;
-
-
-              /*
-               * Is this item temporarily hidden
-               * because it is wrapping?
-               */
-              const isHidden =
-                hiddenItems.has(index);
+                index === selected;
 
 
               const Icon = item.icon;
@@ -611,44 +499,20 @@ export function Automation() {
                     /*
                      * X/Y movement.
                      *
-                     * Because every click performs
-                     * one step at a time, this animation
-                     * remains quick and smooth even
-                     * for distant items.
+                     * Driven manually every animation frame
+                     * (see handleSelect), not by a CSS
+                     * transition — that's what lets Y be
+                     * recomputed from the real curve at each
+                     * intermediate X instead of being
+                     * linearly interpolated between two
+                     * fixed endpoints.
                      */
                     transform: `
                       translateX(${x}px)
                       translateY(${y}px)
                     `,
 
-                    transition: isHidden
-                      ? "none"
-                      : `
-                          transform
-                          ${STEP_DURATION}ms
-                          cubic-bezier(
-                            0.22,
-                            0.75,
-                            0.25,
-                            1
-                          )
-                        `,
-
-                    /*
-                     * Hide only the wrapping item.
-                     *
-                     * It gets repositioned while invisible.
-                     */
-                    opacity: isHidden
-                      ? 0
-                      : 1,
-
-                    /*
-                     * Don't allow clicking a hidden item.
-                     */
-                    pointerEvents: isHidden
-                      ? "none"
-                      : "auto",
+                    transition: "none",
 
                     /*
                      * Active item always above others.
@@ -681,14 +545,14 @@ export function Automation() {
                               h-20
                               bg-red-600
                               border-red-600
-                              shadow-lg
+                              shadow-[0px_12px_16px_rgba(217,43,43,0.2)]
                             `
                           : `
                               w-[72px]
                               h-[72px]
                               bg-white
                               border-red-100
-                              shadow-sm
+                              shadow-[0px_8px_12px_rgba(0,0,0,0.08)]
                               hover:border-red-300
                             `
                       }
@@ -759,6 +623,52 @@ export function Automation() {
 
 
         {/* =================================================
+            CONTENT TRANSITION KEYFRAMES
+
+            Scoped here so the component stays self-
+            contained — no external CSS file needed.
+        ================================================= */}
+
+        <style>{`
+          @keyframes automationContentExit {
+            from { opacity: 1; transform: translateY(0px); }
+            to   { opacity: 0; transform: translateY(-10px); }
+          }
+
+          @keyframes automationContentEnterHeading {
+            from { opacity: 0; transform: translateY(12px); }
+            to   { opacity: 1; transform: translateY(0px); }
+          }
+
+          @keyframes automationContentEnterDesc {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0px); }
+          }
+
+          @keyframes automationContentEnterCta {
+            from { opacity: 0; transform: translateY(8px); }
+            to   { opacity: 1; transform: translateY(0px); }
+          }
+
+          .automation-content-exit {
+            animation: automationContentExit ${CONTENT_EXIT_DURATION}ms ease-out both;
+          }
+
+          .automation-content-enter-heading {
+            animation: automationContentEnterHeading ${CONTENT_ENTER_DURATION}ms ease-out 0ms both;
+          }
+
+          .automation-content-enter-desc {
+            animation: automationContentEnterDesc ${CONTENT_ENTER_DURATION}ms ease-out 40ms both;
+          }
+
+          .automation-content-enter-cta {
+            animation: automationContentEnterCta ${CONTENT_ENTER_DURATION}ms ease-out 80ms both;
+          }
+        `}</style>
+
+
+        {/* =================================================
             CONTENT SECTION
         ================================================= */}
 
@@ -817,7 +727,8 @@ export function Automation() {
           =============================================== */}
 
           <h2
-            className="
+            key={`heading-${displayIndex}`}
+            className={`
               font-heading
               font-bold
               text-[44px]
@@ -825,9 +736,15 @@ export function Automation() {
               text-center
               text-neutral-900
               mb-5
-              transition-all
-              duration-300
-            "
+
+              ${
+                contentPhase === "exiting"
+                  ? "automation-content-exit"
+                  : contentPhase === "entering"
+                  ? "automation-content-enter-heading"
+                  : ""
+              }
+            `}
           >
             {active.header}
           </h2>
@@ -838,7 +755,8 @@ export function Automation() {
           =============================================== */}
 
           <p
-            className="
+            key={`desc-${displayIndex}`}
+            className={`
               font-sans
               text-base
               leading-[21px]
@@ -847,9 +765,15 @@ export function Automation() {
               max-w-[600px]
               mx-auto
               mb-8
-              transition-all
-              duration-300
-            "
+
+              ${
+                contentPhase === "exiting"
+                  ? "automation-content-exit"
+                  : contentPhase === "entering"
+                  ? "automation-content-enter-desc"
+                  : ""
+              }
+            `}
           >
             {active.des}
           </p>
@@ -860,8 +784,9 @@ export function Automation() {
           =============================================== */}
 
           <a
+            key={`cta-${displayIndex}`}
             href="#services"
-            className="
+            className={`
               group
               inline-flex
               items-center
@@ -875,7 +800,15 @@ export function Automation() {
               px-7
               py-4
               rounded-[10px]
-            "
+
+              ${
+                contentPhase === "exiting"
+                  ? "automation-content-exit"
+                  : contentPhase === "entering"
+                  ? "automation-content-enter-cta"
+                  : ""
+              }
+            `}
           >
             View All Services
 
