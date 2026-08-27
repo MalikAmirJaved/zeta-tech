@@ -13,12 +13,12 @@ const ARC: { x: number; y: number }[] = [
   { x:   55, y:  90 }, // slot  0
   { x:  210, y:  60 }, // slot  1
   { x:  410, y:  30 }, // slot  2
-  { x:  619, y:   0 }, // slot  3  (active center)
-  { x:  811, y:  30 }, // slot  4
-  { x:  988, y:  60 }, // slot  5
-  { x: 1148, y:  90 }, // slot  6
-  { x: 1310, y: 120 }, // slot  7  (off-screen right)
-  { x: 1480, y: 150 }, // slot  8
+  { x:  600, y:   0 }, // slot  3  (active center)
+  { x:  790, y:  30 }, // slot  4
+  { x:  990, y:  60 }, // slot  5
+  { x: 1145, y:  90 }, // slot  6
+  { x: 1290, y: 120 }, // slot  7  (off-screen right)
+  { x: 1490, y: 150 }, // slot  8
 ];
 
 function arcPos(slot: number) {
@@ -305,7 +305,7 @@ export function Automation() {
 
   return (
     <div
-      className="bg-[#fffffd] flex flex-col items-start px-[264px] py-[120px] relative size-full"
+      className="bg-[#fffffd] flex flex-col items-center px-[264px] py-[120px] relative size-full"
       data-name="ServicesSection"
     >
       <BackgroundFrame />
