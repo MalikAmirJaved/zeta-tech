@@ -66,23 +66,12 @@ export function MegaProducts() {
                 >
                   {product.name}
                 </span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className={`transition-colors ${
-                    index === activeIndex ? "text-primary" : "text-muted-foreground"
+                <ArrowRight
+                  size={20}
+                  className={`transition-transform duration-200 ${
+                    index === activeIndex ? "text-primary -rotate-30" : "text-muted-foreground group-hover:-rotate-30"
                   }`}
-                >
-                  <path d="M7 17L17 7" />
-                  <path d="M7 7h10v10" />
-                </svg>
+                />
               </button>
             ))}
           </div>
