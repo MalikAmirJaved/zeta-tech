@@ -10,7 +10,7 @@ const caseStudies = [
     statLabel: "Cost reduction achieved",
     description:
       "By migrating their core transaction registry layers into Zeta's virtualization cluster architecture, securing critical data trails.",
-    image: "/images/provenresults/c828f00d4255d82399b45ec1644428d97d4c71ad.png",
+    image: "/images/provenresults/be07f621ae4c8dac4e4749a8813c5cb76e82f61c.png",
   },
   {
     company: "Systems Ltd",
@@ -26,7 +26,7 @@ const caseStudies = [
     statLabel: "Secure daily transactions",
     description:
       "Handling robust financial workloads and high-throughput databases securely with dedicated hardware machine intelligence modules.",
-    image: "/images/provenresults/be07f621ae4c8dac4e4749a8813c5cb76e82f61c.png",
+    image: "/images/provenresults/c828f00d4255d82399b45ec1644428d97d4c71ad.png",
   },
 ];
 
@@ -63,14 +63,14 @@ export function Industries() {
           {caseStudies.map((study) => (
             <div
               key={study.company}
-              className="relative rounded-2xl overflow-hidden h-[262px]"
+              className="group relative rounded-2xl overflow-hidden h-[262px]"
             >
               {/* Background Image */}
               <Image
                 src={study.image}
                 alt={study.company}
                 fill
-                className="object-cover"
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-150"
               />
 
               {/* Gradient Overlay */}
@@ -105,10 +105,10 @@ export function Industries() {
         {/* CTA Button */}
         <a
           href="#case-studies"
-          className="inline-flex items-center gap-2 bg-primary text-white font-heading font-bold text-[15px] leading-5 px-7 py-4 rounded-[10px] hover:opacity-90 transition-opacity"
+          className="group inline-flex items-center gap-2 bg-primary text-white font-heading font-bold text-[15px] leading-5 px-7 py-4 rounded-[10px]"
         >
           View All Case Studies
-          <ArrowRight className="w-4 h-4" />
+          <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:-rotate-30" />
         </a>
       </div>
     </section>

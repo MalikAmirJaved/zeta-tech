@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { ArrowRight } from "lucide-react";
 
 const navItems = [
   { label: "About", href: "#about" },
@@ -79,11 +80,12 @@ export function Footer() {
               <input
                 type="email"
                 placeholder="Enter Email"
-                className="w-full h-full px-4 border border-border rounded-2xl font-heading font-semibold text-base leading-[21px] text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
+                className="w-full h-full px-4 border border-black rounded-2xl font-heading font-semibold text-base leading-[21px] text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
               />
             </div>
-            <button className="w-[126px] h-[51px] border border-primary rounded-2xl font-heading font-semibold text-base leading-[21px] text-primary hover:bg-primary hover:text-white transition-colors">
+            <button className="group inline-flex items-center gap-2 px-6 py-3 border border-primary rounded-xl font-heading font-semibold text-base leading-[21px] bg-primary text-primary-foreground">
               Subscribe
+              <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:-rotate-30" />
             </button>
           </div>
         </div>

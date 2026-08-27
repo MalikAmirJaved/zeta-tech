@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { ArrowRight } from "lucide-react";
 
 const services = [
   {
@@ -40,9 +41,10 @@ export function MegaServices() {
           <h3 className="font-heading font-semibold text-3xl text-foreground">Services</h3>
           <a
             href="#"
-            className="px-5 py-2 rounded-full border border-primary text-primary font-heading font-semibold text-sm hover:bg-primary hover:text-white transition-colors"
+            className="group px-5 py-2 rounded-full border border-primary text-primary font-heading font-semibold text-sm hover:bg-primary hover:text-white transition-colors flex items-center gap-1"
           >
             View All Services
+            <ArrowRight size={16} className="transition-transform duration-200 group-hover:-rotate-30" />
           </a>
         </div>
 
@@ -60,9 +62,10 @@ export function MegaServices() {
                 <p className="text-muted-foreground mt-2 text-sm">{service.description}</p>
                 <a
                   href={service.explore}
-                  className="text-primary mt-3 inline-block font-heading font-semibold text-sm"
+                  className="group text-primary mt-3 inline-flex items-center gap-1 font-heading font-semibold text-sm"
                 >
-                  Explore →
+                  Explore
+                  <ArrowRight size={16} className="transition-transform duration-200 group-hover:-rotate-30" />
                 </a>
                 {service.subLinks && (
                   <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1">

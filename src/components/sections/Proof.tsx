@@ -73,18 +73,18 @@ export function Proof() {
             {capabilities.map((item, index) => (
               <div
                 key={item.title}
-                className={`flex flex-col gap-3 p-8 ${getCellBorderClass(index)}`}
+                className={`group flex flex-col gap-3 p-8 ${getCellBorderClass(index)} hover:bg-primary transition-colors`}
               >
                 {/* Title Row */}
                 <div className="flex items-center gap-2.5">
-                  <div className="w-2 h-2 rounded-full bg-primary" />
-                  <h3 className="font-heading font-bold text-[13px] leading-[17px] tracking-[1px] text-dark uppercase">
+                  <div className="w-2 h-2 rounded-full bg-primary group-hover:bg-white transition-colors" />
+                  <h3 className="font-heading font-bold text-[13px] leading-[17px] tracking-[1px] text-dark uppercase group-hover:text-white transition-colors">
                     {item.title}
                   </h3>
                 </div>
 
                 {/* Description */}
-                <p className="font-sans text-sm leading-[22px] text-muted-foreground">
+                <p className="font-sans text-sm leading-[22px] text-muted-foreground group-hover:text-white transition-colors">
                   {item.description}
                 </p>
               </div>

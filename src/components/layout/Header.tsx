@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import dynamic from "next/dynamic";
 import { ArrowRight, ChevronDown, Menu, X } from "lucide-react";
 
@@ -17,6 +17,19 @@ const MegaServices = dynamic(() => import("./MegaServices").then((m) => m.MegaSe
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeMenu, setActiveMenu] = useState<string | null>(null);
+  const menuTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleMenuEnter = (label: string) => {
+    if (menuTimeoutRef.current) clearTimeout(menuTimeoutRef.current);
+    setActiveMenu(label);
+  };
+
+  const handleMenuLeave = () => {
+    menuTimeoutRef.current = setTimeout(() => {
+      setActiveMenu(null);
+    }, 150);
+  };
 
   return (
     <header className="bg-dark border-b border-dark sticky top-0 z-50">
@@ -33,7 +46,12 @@ export function Header() {
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex items-center gap-[38.4px]">
           {navItems.map((item) => (
-            <div key={item.label} className="relative group">
+            <div
+              key={item.label}
+              className="relative"
+              onMouseEnter={() => handleMenuEnter(item.label)}
+              onMouseLeave={handleMenuLeave}
+            >
               <a
                 href={item.href}
                 className="flex items-center gap-1.5 text-white font-heading font-semibold text-base hover:text-primary transition-colors"
@@ -45,15 +63,23 @@ export function Header() {
               </a>
 
               {/* Products Mega Menu — fixed to viewport, full width */}
-              {item.label === "Products" && (
-                <div className="invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-150 pointer-events-none group-hover:pointer-events-auto fixed left-0 right-0 top-[136px] w-screen z-50">
+              {item.label === "Products" && activeMenu === "Products" && (
+                <div
+                  className="visible opacity-100 transition-all duration-150 pointer-events-auto fixed left-0 right-0 top-[136px] w-screen z-50"
+                  onMouseEnter={() => handleMenuEnter("Products")}
+                  onMouseLeave={handleMenuLeave}
+                >
                   <MegaProducts />
                 </div>
               )}
 
               {/* Services Mega Menu — fixed to viewport, full width */}
-              {item.label === "Services" && (
-                <div className="invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-150 pointer-events-none group-hover:pointer-events-auto fixed left-0 right-0 top-[136px] w-screen z-50">
+              {item.label === "Services" && activeMenu === "Services" && (
+                <div
+                  className="visible opacity-100 transition-all duration-150 pointer-events-auto fixed left-0 right-0 top-[136px] w-screen z-50"
+                  onMouseEnter={() => handleMenuEnter("Services")}
+                  onMouseLeave={handleMenuLeave}
+                >
                   <MegaServices />
                 </div>
               )}
@@ -65,12 +91,12 @@ export function Header() {
         <div className="hidden lg:block">
           <a
             href="#contact"
-            className="bg-primary text-primary-foreground font-heading font-semibold text-sm px-5 py-2.5 rounded-[10px] hover:opacity-90 transition-opacity inline-flex items-center gap-2"
+            className="group bg-primary text-primary-foreground font-heading font-semibold text-sm px-5 py-2.5 rounded-[10px] inline-flex items-center gap-2"
           >
             Talk to Zeta
             <ArrowRight
               size={16}
-              className="transition-transform duration-200 group-hover:translate-x-1"
+              className="transition-transform duration-200 group-hover:-rotate-30"
             />
           </a>
         </div>

@@ -37,14 +37,14 @@ export function Platforms() {
       className="relative bg-secondary py-[120px] px-6 lg:px-[144px] overflow-hidden"
     >
       {/* Background Logo */}
-      <div className="absolute right-[-150px] top-28 w-[650px] h-[645px] pointer-events-none z-0">
+      <div className="absolute right-[-150px] top-28 w-[680px] h-[700px] pointer-events-none z-0">
         <Image
           src="/biglogo.png"
           alt=""
-          width={650}
-          height={645}
+          width={680}
+          height={700}
           priority
-          className="w-[650px] h-[645px] object-contain opacity-[0.08]"
+          className="w-[650px] h-[700px] object-contain "
         />
       </div>
 
@@ -85,7 +85,7 @@ export function Platforms() {
           {platforms.map((platform) => (
             <div
               key={platform.title}
-              className="bg-white border border-border rounded-2xl p-8 flex flex-col gap-4"
+              className="group bg-white border border-border rounded-2xl p-8 flex flex-col gap-4 hover:border-primary transition-colors"
             >
               {/* Status Indicator */}
               <StatusIndicator />
@@ -103,10 +103,10 @@ export function Platforms() {
               {/* Footer Link - mt-auto pushes this to bottom */}
               <a
                 href="#"
-                className="mt-auto inline-flex items-center gap-2 text-primary font-heading font-bold text-sm leading-[18px] hover:underline"
+                className="mt-auto group inline-flex items-center gap-2 text-primary font-heading font-bold text-sm leading-[18px] hover:underline"
               >
                 Explore
-                <ArrowRight className="w-3 h-3" />
+                <ArrowRight strokeWidth={4} className="w-3 h-3 transition-transform duration-200 group-hover:-rotate-30" />
               </a>
             </div>
           ))}
@@ -116,10 +116,10 @@ export function Platforms() {
         <div className="flex justify-center">
           <a
             href="#products"
-            className="inline-flex items-center gap-2 bg-primary text-white font-heading font-bold text-[15px] leading-5 px-7 py-4 rounded-[10px] hover:opacity-90 transition-opacity"
+            className="group inline-flex items-center gap-2 bg-primary text-white font-heading font-bold text-[15px] leading-5 px-7 py-4 rounded-[10px]"
           >
             View All Products
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:-rotate-30" />
           </a>
         </div>
       </div>
