@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { ArrowRight } from "lucide-react";
 
 const products = [
   {
@@ -39,9 +40,10 @@ export function MegaProducts() {
           <h3 className="font-heading font-semibold text-3xl text-foreground">Products</h3>
           <a
             href="#"
-            className="px-5 py-2 rounded-full border border-primary text-primary font-heading font-semibold text-sm hover:bg-primary hover:text-white transition-colors"
+            className="group px-5 py-2 rounded-full border border-primary text-primary font-heading font-semibold text-sm hover:bg-primary hover:text-white transition-colors flex items-center gap-1"
           >
             View All Products
+            <ArrowRight size={16} className="transition-transform duration-200 group-hover:-rotate-30" />
           </a>
         </div>
 
@@ -101,9 +103,10 @@ export function MegaProducts() {
             </p>
             <a
               href={active.explore}
-              className="mt-4 inline-block text-primary font-heading font-semibold text-sm"
+              className="group mt-4 inline-flex items-center gap-1 text-primary font-heading font-semibold text-sm"
             >
-              Explore {active.name} →
+              Explore {active.name}
+              <ArrowRight size={16} className="transition-transform duration-200 group-hover:-rotate-30" />
             </a>
           </div>
         </div>
