@@ -2,6 +2,7 @@
 
 import { useState, useRef, useCallback } from "react";
 import type { CSSProperties } from "react";
+import { ArrowRight } from "lucide-react";
 import svgPaths from "@/components/imports/svg-c3w3uvuogl";
 
 // ─── Arc layout ───────────────────────────────────────────────────────────────
@@ -453,18 +454,16 @@ export function Automation() {
             }}
           >
             {svc.description}
-          </p>
-
-          {/* CTA */}
+          </p>            {/* CTA */}
           <button
             key={`cta-${displayIdx}`}
-            className={
+            className={`group ${
               contentAnim === "exiting"
                 ? exitClass
                 : contentAnim === "entering"
                 ? "anim-enter-cta"
                 : ""
-            }
+            }`}
             style={{
               display: "flex",
               alignItems: "center",
@@ -482,14 +481,10 @@ export function Automation() {
             }}
           >
             View Service Detail
-            <svg fill="none" height="16" viewBox="0 0 16 16" width="16">
-              <path
-                d={svgPaths.p3bfa7a00}
-                stroke="white"
-                strokeLinecap="round"
-                strokeWidth="2"
-              />
-            </svg>
+            <ArrowRight
+              size={16}
+              className="transition-transform duration-200 group-hover:-rotate-30"
+            />
           </button>
         </div>
       </div>
