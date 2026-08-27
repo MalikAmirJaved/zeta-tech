@@ -124,7 +124,13 @@ All colors MUST come from `globals.css` using semantic tokens. This ensures that
 - On hover, border must change to `border-primary` using `group-hover:border-primary` with `transition-colors`
 - For internal arrow/link icons inside cards, apply `transition-transform duration-200 group-hover:-rotate-30` to tilt slightly upward on hover
 
-### 10. COMMIT CONVENTIONS
+### 10. GRID CELL HOVER BEHAVIOR
+- For grid/list cells that change background on hover, use `group` on the cell container
+- Apply `hover:bg-primary` and `transition-colors` to the cell
+- Ensure inner text becomes readable on hover by adding `group-hover:text-white` to text elements
+- For status dots/icons inside cells, add `group-hover:bg-white transition-colors` to maintain visibility
+
+### 11. COMMIT CONVENTIONS
 - Format: `type(scope): description`
 - Types: feat, fix, style, refactor, docs, chore
 - Example: `feat(hero): implement hero section with NOC dashboard`
